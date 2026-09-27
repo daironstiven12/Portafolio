@@ -1,0 +1,73 @@
+# =====================================================================
+#  Portafolio.Ds — .gitignore
+#  Sitio estático (HTML/CSS/JS). Aquí solo se versiona el sitio.
+#  Objetivo: que ni secretos ni artefactos entren nunca al repositorio.
+# =====================================================================
+
+# --- Secretos y credenciales (NUNCA subir) ---------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+secrets/
+secrets.*
+credentials/
+credentials.*
+*.keystore
+.netrc
+
+# --- Dependencias y artefactos de build ------------------------------
+node_modules/
+bower_components/
+jspm_packages/
+dist/
+build/
+.cache/
+.parcel-cache/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# --- Registros -------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+
+# --- Sistema operativo ----------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --- Editores e IDE (pueden contener rutas/credenciales locales) -----
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.code-workspace
+
+# --- Temporales y copias de seguridad --------------------------------
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+~$*
+*.part

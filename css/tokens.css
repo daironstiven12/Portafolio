@@ -1,0 +1,96 @@
+﻿/* ==========================================================================
+   tokens.css — Sistema de diseño del portafolio
+   --------------------------------------------------------------------------
+   Define color, tipografía, espaciado, radios y efectos.
+   Todo el CSS de componentes consume estas variables.
+   Incluye el tema claro/oscuro (clase .light-theme en <html>).
+   ========================================================================== */
+
+:root {
+    /* --- Identidad (conservada del proyecto original) --- */
+    --primary: #0d6efd;
+    --primary-hover: #0b5ed7;            /* hover sobre fondo oscuro */
+    --secondary: #6610f2;                /* acento de apoyo: ::selection */
+
+    /* --- Superficies: tema oscuro --- */
+    --body-bg: #0a0a0a;
+    --surface: #121212;
+    --surface-2: #171717;
+
+    /* --- Texto --- */
+    --text: #e6e8ea;
+    --muted: #9aa2ab;
+
+    /* --- Trazos --- */
+    --line: rgba(255, 255, 255, 0.10);
+    --line-strong: rgba(255, 255, 255, 0.22);
+
+    /* --- Acentos de estado --- */
+    --accent-soft: rgba(13, 110, 253, 0.12);
+    --success: #35b37e;
+    --success-soft: rgba(53, 179, 126, 0.14);
+    --danger: #ef6a6a;
+
+    /* --- Tipografía --- */
+    --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+
+    --fs-hero: clamp(2.75rem, 7.5vw, 5rem);
+    --fs-h2: clamp(1.75rem, 3.6vw, 2.6rem);
+    --fs-body: 1rem;
+    --fs-lg: clamp(1.02rem, 1.1vw, 1.125rem);
+    --fs-sm: 0.9rem;
+    --fs-xs: 0.8rem;
+    --fs-mono: 0.72rem;
+
+    /* --- Layout --- */
+    --container: 1180px;
+    --gutter: clamp(20px, 5vw, 44px);
+    --section-y: clamp(72px, 9vw, 124px);
+    --header-h: 68px;
+
+    /* --- Formas --- */
+    --radius: 4px;
+    --radius-lg: 7px;
+
+    /* --- Efectos --- */
+    --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.45);
+    --ease: cubic-bezier(0.2, 0.6, 0.3, 1);
+    --transition:
+        color 0.18s var(--ease),
+        background-color 0.18s var(--ease),
+        border-color 0.18s var(--ease),
+        opacity 0.18s var(--ease),
+        transform 0.18s var(--ease),
+        box-shadow 0.18s var(--ease);
+
+    --d: 0ms;
+
+    color-scheme: dark;
+}
+
+/* --- Tema claro: se aplica como clase en <html> ---
+   Motivo del cambio de --primary: #0d6efd alcanza 4.06:1 sobre #f1f3f6 y no
+   cumple WCAG AA (4.5:1) para texto pequeño. #0a58ca llega a 5.8:1 y sigue
+   siendo el mismo azul de marca, solo un paso más oscuro. --- */
+.light-theme {
+    --primary: #0a58ca;
+    --primary-hover: #0847a9;
+
+    --body-bg: #f1f3f6;
+    --surface: #ffffff;
+    --surface-2: #f7f8fa;
+    --text: #15181c;
+    --muted: #5b6470;
+
+    --line: rgba(16, 20, 26, 0.14);
+    --line-strong: rgba(16, 20, 26, 0.30);
+
+    --accent-soft: rgba(10, 88, 202, 0.12);
+    --success-soft: rgba(53, 179, 126, 0.16);
+
+    --shadow-lg: 0 20px 48px rgba(16, 20, 26, 0.14);
+
+    color-scheme: light;
+}

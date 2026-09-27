@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ========================= SEGURIDAD ==============================
+         GitHub Pages NO permite definir cabeceras HTTP propias, así que
+         estas dos etiquetas <meta> son la vía disponible en el navegador:
+
+         · Content-Security-Policy → limita qué orígenes pueden entregar
+           scripts, estilos, fuentes, imágenes y conexiones.
+           NO admite 'frame-ancestors' ni 'report-uri' dentro de <meta>;
+           esa protección requiere cabecera HTTP (ver README.md).
+         · referrer → no envía el referer a sitios de terceros.
+         ================================================================== -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self'; connect-src 'self'; media-src 'self'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests">
+    <meta name="referrer" content="no-referrer">
+
+    <!-- SEO -->
+    <title>Dairon Orejuela — Portafolio de desarrollo web y software</title>
+    <meta name="description" content="Portafolio de Dairon Orejuela, estudiante de Ingeniería de Telecomunicaciones e Informática orientado al desarrollo web, UX/UI y software.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Dairon Orejuela">
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f1f3f6" media="(prefers-color-scheme: light)">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_CO">
+    <meta property="og:site_name" content="Dairon Orejuela">
+    <meta property="og:title" content="Dairon Orejuela — Portafolio de desarrollo web y software">
+    <meta property="og:description" content="Estudiante de Ingeniería de Telecomunicaciones e Informática orientado al desarrollo web, UX/UI y software. Proyectos, capacidades y contacto.">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Dairon Orejuela — Portafolio de desarrollo web y software">
+    <meta name="twitter:description" content="Estudiante de Ingeniería de Telecomunicaciones e Informática orientado al desarrollo web, UX/UI y software.">
+
+    <!-- Iconos -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- Tipografía (SRI no es viable aquí: Google Fonts devuelve CSS
+         distinto según el navegador, así que el hash no sería estable) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap">
+
+    <!-- Iconografía (versión fija + SRI: si CDN cambia el archivo, no se carga) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+          integrity="sha384-L/vw44MdBs/7hovWr2rBVSRKqdti4Vw077yuSGQ2PO3tQARRLiLuMh8xhVmVrR0I"
+          crossorigin="anonymous">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Tema antes del primer pintado: evita el destello del tema equivocado.
+         En archivo externo (y no en línea) para que la CSP pueda exigir
+         script-src 'self' sin 'unsafe-inline'. -->
+    <script src="js/theme-init.js"></script>
+
+    <!-- Datos estructurados: solo información verificada en este repositorio -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Dairon Orejuela",
+        "jobTitle": "Estudiante de Ingeniería de Telecomunicaciones e Informática",
+        "email": "stiven3222177@gmail.com",
+        "description": "Estudiante de Ingeniería de Telecomunicaciones e Informática orientado al desarrollo de software, aplicaciones web y UX/UI.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "CO"
+        },
+        "knowsAbout": [
+            "Desarrollo web",
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "Bootstrap",
+            "Diseño UX/UI",
+            "Responsive design",
+            "Wireframing",
+            "Prototipado",
+            "Git",
+            "Telecomunicaciones"
+        ],
+        "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "SENA"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <!-- ============================ CABECERA ============================ -->
+    <header class="site-header" id="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#inicio" aria-label="Dairon Orejuela — volver al inicio">
+                <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false"><rect class="bm-tile" width="64" height="64" rx="6"/><path class="bm-glyph" d="M16 16h13c9.4 0 16 6.9 16 16s-6.6 16-16 16H16V16zm8 7v18h5c5.1 0 8.5-3.7 8.5-9S34.1 23 29 23h-5z"/><circle class="bm-bead" cx="50" cy="47" r="4"/></svg></span>
+            </a>
+
+            <nav class="nav" id="nav" aria-label="Navegación principal">
+                <ul class="nav-list">
+                    <li><a class="nav-link" href="#perfil">Perfil</a></li>
+                    <li><a class="nav-link" href="#capacidades">Capacidades</a></li>
+                    <li><a class="nav-link" href="#proyectos">Proyectos</a></li>
+                    <li><a class="nav-link" href="#trayectoria">Trayectoria</a></li>
+                    <li><a class="nav-link" href="#certificados">Certificados</a></li>
+                    <li><a class="nav-link" href="#herramientas">Herramientas</a></li>
+                    <li><a class="nav-link" href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" type="button"
+                        aria-label="Tema claro" aria-pressed="false"
+                        title="Alternar tema claro u oscuro">
+                    <i class="ri-sun-line theme-icon theme-icon--light" aria-hidden="true"></i>
+                    <i class="ri-moon-line theme-icon theme-icon--dark" aria-hidden="true"></i>
+                </button>
+
+                <button class="nav-toggle" id="nav-toggle" type="button"
+                        aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-backdrop" id="nav-backdrop" hidden></div>
+
+    <main id="contenido">
+
+        <!-- ============================== HERO ============================== -->
+        <section class="hero" id="inicio">
+            <div class="container hero-inner">
+
+                <div class="hero-content">
+                    <p class="hero-eyebrow">
+                        <span class="dot" aria-hidden="true"></span>
+                        Portafolio · Colombia
+                    </p>
+
+                    <h1 class="hero-title">Dairon Orejuela<span class="hero-dot">.</span></h1>
+
+                    <p class="hero-role">Estudiante de Ingeniería de Telecomunicaciones e Informática</p>
+
+                    <p class="hero-summary">
+                        Orientado al desarrollo de software: aplicaciones web, interfaces y
+                        experiencias digitales. Construyo proyectos reales y documento
+                        lo que aprendo en el camino.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#proyectos">
+                            Ver proyectos <i class="ri-arrow-right-line" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-ghost" href="#contacto">Contacto</a>
+                        <button class="btn btn-quiet" type="button" data-print>
+                            <i class="ri-printer-line" aria-hidden="true"></i> Guardar CV
+                        </button>
+                    </div>
+
+                    <div class="hero-links" data-render="links" data-variant="hero"></div>
+                </div>
+
+                <aside class="hero-media" aria-label="Ficha de perfil">
+                    <div class="hero-photo" data-photo hidden></div>
+
+                    <div class="spec" data-spec>
+                        <p class="spec-head"><span>Ficha técnica</span><span>Perfil</span></p>
+                        <dl class="spec-list">
+                            <div class="spec-row">
+                                <dt>Focus</dt>
+                                <dd>Web · UX/UI · Software</dd>
+                            </div>
+                            <div class="spec-row">
+                                <dt>Ubicación</dt>
+                                <dd>Colombia</dd>
+                            </div>
+                            <div class="spec-row">
+                                <dt>Estado</dt>
+                                <dd>Estudiante · Desarrollador en formación</dd>
+                            </div>
+                        </dl>
+                        <a class="spec-foot" href="#trayectoria">
+                            Ver trayectoria <i class="ri-arrow-right-line" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </aside>
+
+            </div>
+        </section>
+
+        <!-- ============================= PERFIL ============================= -->
+        <section class="section" id="perfil" data-section>
+            <div class="container">
+                <div class="split">
+                    <header class="section-head">
+                        <p class="section-index">Perfil</p>
+                        <h2 class="section-title">Quién está detrás del código</h2>
+                    </header>
+
+                    <div class="prose">
+                        <p class="prose-lead">
+                            Estudiante de Ingeniería de Telecomunicaciones e Informática,
+                            orientado al desarrollo de software, aplicaciones web, backend,
+                            bases de datos, inteligencia artificial y UX/UI.
+                        </p>
+                        <p>
+                            Combino la formación universitaria con la creación de interfaces y
+                            sitios web funcionales. Antes de la universidad obtuve el Tecnólogo
+                            en Desarrollo de Software (SENA, 2022), la base sobre la que sigo
+                            construyendo proyecto a proyecto.
+                        </p>
+                        <p>
+                            Mi forma de trabajar es directa: entender el problema, diseñar la
+                            solución, construirla y volver a revisarla. El siguiente tramo de mi
+                            camino apunta a React, Node.js y bases de datos para completar el
+                            desarrollo full-stack.
+                        </p>
+
+                        <blockquote class="pullquote">
+                            <p>«El aprendizaje es un viaje continuo. Cada proyecto es una oportunidad
+                            para mejorar y cada error, una lección.»</p>
+                            <cite>Dairon Orejuela</cite>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================== CAPACIDADES =========================== -->
+        <section class="section" id="capacidades" data-section data-optional="areas">
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-index">Capacidades</p>
+                    <h2 class="section-title">Áreas de especialización</h2>
+                    <p class="section-lede">
+                        Agrupadas por disciplina, no por logo. Cada área resume qué sé
+                        hacer y con qué tecnología lo aplico.
+                    </p>
+                </header>
+
+                <div class="area-grid" data-render="areas"></div>
+            </div>
+        </section>
+
+        <!-- ============================ PROYECTOS ============================ -->
+        <section class="section" id="proyectos" data-section data-optional="projects">
+            <div class="container">
+                <header class="section-head section-head--row">
+                    <div class="section-head-main">
+                        <p class="section-index">Proyectos</p>
+                        <h2 class="section-title">Trabajo seleccionado</h2>
+                        <p class="section-lede">
+                            Proyectos reales: aplicaciones desplegadas, proyectos de
+                            hackathon, comercio web y material de enseñanza. Cada tarjeta
+                            abre el proyecto desplegado.
+                        </p>
+                    </div>
+                    <p class="section-count" data-count="projects" aria-hidden="true"></p>
+                </header>
+
+                <div class="project-grid" data-render="projects"></div>
+
+                <p class="note">
+                    Solo aparecen proyectos verificados con sus tecnologías reales.
+                    Aquellos con versión desplegada abren el sitio publicado en una
+                    pestaña nueva.
+                </p>
+            </div>
+        </section>
+
+        <!-- =========================== TRAYECTORIA =========================== -->
+        <section class="section" id="trayectoria" data-section data-optional="timeline">
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-index">Trayectoria</p>
+                    <h2 class="section-title">Formación y experiencia</h2>
+                    <p class="section-lede">
+                        Academia y proyectos diferenciados por tipo. Sin experiencia
+                        laboral inventada: solo lo que está documentado.
+                    </p>
+                </header>
+
+                <div class="timeline" data-render="timeline"></div>
+            </div>
+        </section>
+
+        <!-- =========================== CERTIFICADOS ========================== -->
+        <section class="section" id="certificados" data-section data-optional="certificates" hidden>
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-index">Certificados</p>
+                    <h2 class="section-title">Certificaciones</h2>
+                    <p class="section-lede">
+                        Certificados emitidos por instituciones y programas oficiales,
+                        con su institución y fecha. Selecciona uno para verlo ampliado.
+                    </p>
+                </header>
+
+                <div class="cert-grid" data-render="certificates"></div>
+            </div>
+        </section>
+
+        <!-- =========================== HERRAMIENTAS ========================== -->
+        <section class="section" id="herramientas" data-section data-optional="tools">
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-index">Herramientas</p>
+                    <h2 class="section-title">Herramientas y tecnologías</h2>
+                    <p class="section-lede">
+                        Herramientas, tecnologías y plataformas con las que construyo
+                        y publico proyectos, agrupadas por función. Pasa el cursor o
+                        toca una tarjeta para ver en qué la utilizo.
+                    </p>
+                </header>
+
+                <div class="tool-rows" data-render="tools"></div>
+            </div>
+        </section>
+
+        <!-- ============================= CONTACTO ============================ -->
+        <section class="section" id="contacto" data-section>
+            <div class="container">
+                <header class="section-head">
+                    <p class="section-index">Contacto</p>
+                    <h2 class="section-title">Hablemos del siguiente proyecto</h2>
+                    <p class="section-lede">
+                        ¿Una colaboración, una duda o una oportunidad? Escríbeme y te
+                        respondo lo antes posible.
+                    </p>
+                </header>
+
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <p class="contact-lead">
+                            El canal más directo es el correo. También encuentras el resto
+                            de perfiles cuando están publicados.
+                        </p>
+
+                        <div class="contact-links" data-render="links" data-variant="contact"></div>
+
+                        <dl class="contact-facts">
+                            <div>
+                                <dt>Ubicación</dt>
+                                <dd>Colombia</dd>
+                            </div>
+                            <div>
+                                <dt>Perfil</dt>
+                                <dd>Estudiante · Desarrollador en formación</dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <form class="contact-form" id="contact-form" novalidate>
+                        <div class="form-row">
+                            <label class="form-label" for="name">Nombre</label>
+                            <input class="form-control" type="text" id="name" name="name"
+                                   autocomplete="name" aria-describedby="name-error" required>
+                            <p class="form-error" id="name-error" hidden>Indica tu nombre.</p>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="form-label" for="email">Correo</label>
+                            <input class="form-control" type="email" id="email" name="email"
+                                   autocomplete="email" aria-describedby="email-error" required>
+                            <p class="form-error" id="email-error" hidden>Introduce un correo válido.</p>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="form-label" for="subject">Asunto</label>
+                            <input class="form-control" type="text" id="subject" name="subject"
+                                   autocomplete="off">
+                        </div>
+
+                        <div class="form-row">
+                            <label class="form-label" for="message">Mensaje</label>
+                            <textarea class="form-control" id="message" name="message" rows="5"
+                                      aria-describedby="message-error" required></textarea>
+                            <p class="form-error" id="message-error" hidden>Escribe un mensaje.</p>
+                        </div>
+
+                        <button class="btn btn-primary btn-block" type="submit">
+                            Preparar mensaje <i class="ri-arrow-right-line" aria-hidden="true"></i>
+                        </button>
+
+                        <p class="form-hint">
+                            Se abrirá tu aplicación de correo con el mensaje ya escrito.
+                            Nada se envía hasta que tú lo confirmes.
+                        </p>
+
+                        <p class="form-status" id="form-status" role="status" hidden></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================== PIE ============================== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a class="brand" href="#inicio">
+                        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false"><rect class="bm-tile" width="64" height="64" rx="6"/><path class="bm-glyph" d="M16 16h13c9.4 0 16 6.9 16 16s-6.6 16-16 16H16V16zm8 7v18h5c5.1 0 8.5-3.7 8.5-9S34.1 23 29 23h-5z"/><circle class="bm-bead" cx="50" cy="47" r="4"/></svg></span>
+                    </a>
+                    <p class="footer-text">
+                        Estudiante de Telecomunicaciones e Informática.
+                        Desarrollo web, UX/UI y software en construcción constante.
+                    </p>
+                    <div class="footer-links" data-render="links" data-variant="footer"></div>
+                </div>
+
+                <nav class="footer-col" aria-label="Secciones del sitio">
+                    <h2 class="footer-title">Secciones</h2>
+                    <ul class="footer-list">
+                        <li><a class="footer-nav-link" href="#perfil">Perfil</a></li>
+                        <li><a class="footer-nav-link" href="#capacidades">Capacidades</a></li>
+                        <li><a class="footer-nav-link" href="#proyectos">Proyectos</a></li>
+                        <li><a class="footer-nav-link" href="#trayectoria">Trayectoria</a></li>
+                        <li><a class="footer-nav-link" href="#certificados">Certificados</a></li>
+                        <li><a class="footer-nav-link" href="#herramientas">Herramientas</a></li>
+                        <li><a class="footer-nav-link" href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+
+                <div class="footer-col">
+                    <h2 class="footer-title">Trabajo</h2>
+                    <ul class="footer-list">
+                        <li><a href="#proyectos">Proyectos publicados</a></li>
+                        <li><a href="#capacidades">Áreas de especialización</a></li>
+                        <li><a href="#trayectoria">Formación</a></li>
+                        <li><a href="#" data-print>Guardar CV</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© <span data-year>2026</span> Dairon Orejuela. Todos los derechos reservados.</p>
+                <p class="footer-note">HTML · CSS · JavaScript — sin frameworks.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================== VOLVER ARRIBA ========================== -->
+    <button class="scroll-top" id="scroll-top" type="button" aria-label="Volver arriba">
+        <i class="ri-arrow-up-line" aria-hidden="true"></i>
+    </button>
+
+    <!-- ====================== LIGHTBOX DE CERTIFICADOS ==================== -->
+    <dialog class="lightbox" id="cert-dialog" aria-labelledby="cert-dialog-title">
+        <div class="lightbox-inner">
+            <button class="lightbox-close" type="button" data-dialog-close aria-label="Cerrar">
+                <i class="ri-close-line" aria-hidden="true"></i>
+            </button>
+
+            <div class="lightbox-media">
+                <img id="cert-dialog-img" src="" alt="">
+            </div>
+
+            <div class="lightbox-body">
+                <p class="lightbox-meta" id="cert-dialog-meta"></p>
+                <h2 class="lightbox-title" id="cert-dialog-title"></h2>
+                <p class="lightbox-desc" id="cert-dialog-desc"></p>
+                <a class="btn btn-ghost" id="cert-dialog-verify" href="#" target="_blank"
+                   rel="noopener noreferrer" hidden>
+                    Verificar certificado <i class="ri-external-link-line" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </dialog>
+
+    <script src="js/logos.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
