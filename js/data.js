@@ -85,6 +85,12 @@ window.SITE = {
     //   experiencia pública de la sección de proyectos.
     // · image vacía => se pinta una placa tipográfica (previewIcon) en vez de foto.
     // · context      => etiqueta sobre la preview (p. ej. 'Hackathon Chocó').
+    // · filter       => categoría corta para los filtros de la sección
+    //   ('Web', 'Apps', 'UX'…). Es un valor libre: los botones de filtro se
+    //   generan con los valores reales que encuentre, en orden de aparición.
+    //   Vacío => el proyecto solo aparece bajo «Todos».
+    //   Si todos los proyectos comparten una sola categoría (o ninguna la
+    //   tiene), los filtros no se muestran.
     // · Sin demoUrl no se pinta ningún botón ni es enlace la tarjeta.
     // · El orden de este array es el orden de la sección.
     projects: [
@@ -94,6 +100,7 @@ window.SITE = {
             context: '',
             description: 'Panel web para monitorear y gestionar contenedores inteligentes con visión artificial, con un modo de demostración interactiva que simula el flujo completo de reciclaje en un campus universitario.',
             category: 'Panel de administración',
+            filter: 'Web',
             technologies: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Recharts'],
             status: 'Activo',
             image: 'assets/projects/web-contenedor-v2.jpg',
@@ -107,6 +114,7 @@ window.SITE = {
             context: 'Hackathon Chocó',
             description: 'Sistema de monitoreo del Río Atrato: mapa de estaciones, panel de crisis, seguimiento de nodos y agente de vigilancia ambiental.',
             category: 'Monitoreo ambiental',
+            filter: 'Web',
             technologies: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Google Maps'],
             status: '',
             image: 'assets/projects/hackathon-choco.jpg',
@@ -120,6 +128,7 @@ window.SITE = {
             context: 'Libretas artesanales',
             description: 'Sitio para libretas artesanales personalizadas: colección, galería, testimonios, boletín y contacto por WhatsApp, con modo oscuro y animaciones de entrada.',
             category: 'Desarrollo web',
+            filter: 'Web',
             technologies: ['HTML', 'CSS', 'JavaScript', 'AOS'],
             status: '',
             image: 'assets/projects/dedicacion-eterna.jpg',
@@ -133,6 +142,7 @@ window.SITE = {
             context: 'Proyecto de enseñanza',
             description: 'Bot de Telegram que envía la palabra del día en inglés: la genera con inteligencia artificial, la explica con un ejemplo corto y la lee en voz alta.',
             category: 'Automatización',
+            filter: 'Apps',
             technologies: ['Python', 'Telegram Bot API', 'Gemini', 'gTTS'],
             status: '',
             image: '',
@@ -146,6 +156,7 @@ window.SITE = {
             context: 'Proyecto de enseñanza',
             description: 'Aplicación web infantil para aprender las vocales con audio, video introductorio, ficha por vocal y barra de progreso con puntaje.',
             category: 'Aplicación educativa',
+            filter: 'Apps',
             technologies: ['HTML', 'CSS', 'JavaScript'],
             status: '',
             image: 'assets/projects/vocales-app.jpg',
@@ -159,6 +170,7 @@ window.SITE = {
             context: '',
             description: 'Autodiagnóstico de cumplimiento de la Ley 1581: evalúa la protección de datos de una organización, identifica brechas y propone recomendaciones con IA para cerrarlas.',
             category: 'Cumplimiento normativo',
+            filter: 'Apps',
             technologies: [],
             status: '',
             image: 'assets/projects/cavaltec.jpg',
@@ -173,6 +185,7 @@ window.SITE = {
             context: '',
             description: 'Plataforma para crear metas de ahorro colectivas en equipo y hacer realidad el viaje en familia: metas, seguimiento en tiempo real, chat familiar e información turística.',
             category: 'Aplicación web',
+            filter: 'Apps',
             technologies: [],
             status: '',
             image: 'assets/projects/viajefamilia.jpg',
@@ -186,6 +199,7 @@ window.SITE = {
             context: 'Boda · 13 dic 2025',
             description: 'Sitio de boda con historia, galería de recuerdos, cuenta regresiva, detalles del evento y confirmación de asistencia.',
             category: 'Sitio de evento',
+            filter: 'Web',
             technologies: [],
             status: '',
             image: 'assets/projects/tirso-evarista.jpg',
@@ -199,6 +213,7 @@ window.SITE = {
             context: '',
             description: 'Plataforma educativa con materias, lecciones interactivas, quizzes y juegos, con seguimiento del progreso de cada estudiante.',
             category: 'Plataforma educativa',
+            filter: 'Apps',
             technologies: [],
             status: '',
             image: 'assets/projects/aula-digital.jpg',
@@ -212,6 +227,7 @@ window.SITE = {
             context: '',
             description: 'Contenedores inteligentes que clasifican residuos con visión por computadora y registran historial y trazabilidad en un ecosistema web y móvil.',
             category: 'IA e IoT',
+            filter: 'Apps',
             technologies: ['React Native', 'OpenCV', 'TensorFlow', 'AWS'],
             status: '',
             image: 'assets/projects/binova-ia.jpg',
@@ -225,6 +241,7 @@ window.SITE = {
             context: '',
             description: 'Plataforma educativa para aprender lógica de programación y Python: 15 módulos, 35 lecciones, quizzes y un editor de código integrado.',
             category: 'Plataforma educativa',
+            filter: 'Apps',
             technologies: ['Expo', 'React Native', 'Angular', 'FastAPI', 'Python', 'MySQL', 'Docker'],
             status: '',
             image: 'assets/projects/py-logica.jpg',

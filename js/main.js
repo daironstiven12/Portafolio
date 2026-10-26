@@ -191,6 +191,7 @@
             return '<article class="project-card"' +
                 ' id="' + esc(id) + '"' +
                 (demo ? ' data-demo="' + esc(demo) + '"' : '') +
+                (has(p.filter) ? ' data-filter="' + esc(p.filter) + '"' : '') +
                 ' data-reveal>' +
                 preview +
                 '<div class="project-body">' +

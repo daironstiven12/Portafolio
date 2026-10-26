@@ -56,6 +56,7 @@
     <link rel="stylesheet" href="css/tokens.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/effects.css">
+    <link rel="stylesheet" href="css/components.css">
 
     <!-- Tema antes del primer pintado: evita el destello del tema equivocado.
          En archivo externo (y no en línea) para que la CSP pueda exigir
@@ -282,6 +283,9 @@
                     <p class="section-count" data-count="projects" aria-hidden="true"></p>
                 </header>
 
+                <div class="project-filters" data-project-filters role="group"
+                     aria-label="Filtrar proyectos por categoría"></div>
+
                 <div class="project-grid" data-render="projects"></div>
 
                 <p class="note">
@@ -501,5 +505,6 @@
     <script src="js/animations.js"></script>
     <script src="js/liquid-nav.js"></script>
     <script src="js/effects.js"></script>
+    <script src="js/project-filters.js"></script>
 </body>
 </html>
