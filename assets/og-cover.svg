@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"
+     role="img" aria-label="Dairon Orejuela — Portafolio de desarrollo web y software">
+  <!-- ==========================================================================
+       og-cover.svg — Imagen de compartir1200x630 (Open Graph / Twitter)
+       --------------------------------------------------------------------------
+       Origen vectorial del monograma «D» del sitio (assets/favicon.svg) más el
+       nombre. Se exporta a assets/og-cover.png con:
+           inkscape assets/og-cover.svg --export-type=png \
+                    --export-filename=assets/og-cover.png --export-width=1200
+       Colores: los mismos que css/tokens.css / css/main.css (#0a0a0a fondo,
+       #e6e8ea texto, #0d6efd acento, #9aa2ab texto tenue).
+       ======================================================================== -->
+  <defs>
+    <radialGradient id="og-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#0d6efd" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#0d6efd" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="og-glow-violet" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#6610f2" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#6610f2" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="og-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M60 0H0V60" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="og-tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b1b1b"/>
+      <stop offset="1" stop-color="#101010"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fondo: mismo negro base que el sitio + retícula técnica + luz ambiental -->
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <rect width="1200" height="630" fill="url(#og-grid)"/>
+  <ellipse cx="1020" cy="90" rx="440" ry="340" fill="url(#og-glow)"/>
+  <ellipse cx="140" cy="600" rx="380" ry="280" fill="url(#og-glow-violet)"/>
+
+  <!-- Monograma «D»: misma geometría que la marca de la cabecera -->
+  <g transform="translate(100 205) scale(3.75)">
+    <rect width="64" height="64" rx="6" fill="url(#og-tile)" stroke="#ffffff" stroke-opacity="0.16" stroke-width="0.6"/>
+    <path d="M16 16h13c9.4 0 16 6.9 16 16s-6.6 16-16 16H16V16zm8 7v18h5c5.1 0 8.5-3.7 8.5-9S34.1 23 29 23h-5z"
+          fill="#e6e8ea"/>
+    <circle cx="50" cy="47" r="4" fill="#0d6efd"/>
+  </g>
+
+  <!-- Bloque tipográfico -->
+  <text x="400" y="232" font-family="Hack, DejaVu Sans Mono, monospace" font-size="23"
+        letter-spacing="8" fill="#0d6efd">PORTAFOLIO · COLOMBIA</text>
+  <text x="400" y="334" font-family="DejaVu Sans, Verdana, sans-serif" font-size="76"
+        font-weight="700" letter-spacing="-1.5" fill="#e6e8ea">Dairon Orejuela</text>
+  <text x="400" y="394" font-family="DejaVu Sans, Verdana, sans-serif" font-size="31"
+        fill="#9aa2ab">Desarrollo web · UX/UI · Software</text>
+  <rect x="400" y="432" width="96" height="5" rx="2.5" fill="#0d6efd"/>
+</svg>
