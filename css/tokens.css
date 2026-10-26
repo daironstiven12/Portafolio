@@ -67,6 +67,17 @@
 
     --d: 0ms;
 
+    /* --- Liquid Glass (barra de navegación) --- */
+    --glass-bg: rgba(24, 26, 32, 0.42);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-shadow: rgba(0, 0, 0, 0.65);
+    --glass-highlight: rgba(255, 255, 255, 0.28);
+    --glass-caustic: rgba(255, 255, 255, 0.06);
+    --glass-reflection: rgba(255, 255, 255, 0.14);
+    --glass-glare: rgba(255, 255, 255, 0.16);
+    --glass-pill: rgba(255, 255, 255, 0.10);
+    --glass-pill-edge: rgba(255, 255, 255, 0.22);
+
     color-scheme: dark;
 }
 
@@ -91,6 +102,16 @@
     --success-soft: rgba(53, 179, 126, 0.16);
 
     --shadow-lg: 0 20px 48px rgba(16, 20, 26, 0.14);
+
+    --glass-bg: rgba(255, 255, 255, 0.50);
+    --glass-border: rgba(255, 255, 255, 0.65);
+    --glass-shadow: rgba(16, 20, 26, 0.22);
+    --glass-highlight: rgba(255, 255, 255, 0.95);
+    --glass-caustic: rgba(255, 255, 255, 0.55);
+    --glass-reflection: rgba(255, 255, 255, 0.70);
+    --glass-glare: rgba(255, 255, 255, 0.60);
+    --glass-pill: rgba(255, 255, 255, 0.85);
+    --glass-pill-edge: rgba(16, 20, 26, 0.08);
 
     color-scheme: light;
 }

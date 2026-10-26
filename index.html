@@ -55,6 +55,7 @@
     <!-- Estilos -->
     <link rel="stylesheet" href="css/tokens.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/effects.css">
 
     <!-- Tema antes del primer pintado: evita el destello del tema equivocado.
          En archivo externo (y no en línea) para que la CSP pueda exigir
@@ -96,6 +97,19 @@
 </head>
 
 <body>
+    <!-- Filtro de «chispa» eléctrica para el borde de las tarjetas de proyecto -->
+    <svg class="svg-defs" aria-hidden="true" focusable="false">
+        <defs>
+            <filter id="electric" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+                <feTurbulence type="turbulence" baseFrequency="0.035" numOctaves="2" seed="3" result="n"/>
+                <feOffset in="n" dx="0" dy="0" result="o">
+                    <animate attributeName="dy" values="300;0" dur="5s" repeatCount="indefinite"/>
+                </feOffset>
+                <feDisplacementMap in="SourceGraphic" in2="o" scale="5" xChannelSelector="R" yChannelSelector="B"/>
+            </filter>
+        </defs>
+    </svg>
+
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
     <!-- ============================ CABECERA ============================ -->
@@ -142,27 +156,27 @@
             <div class="container hero-inner">
 
                 <div class="hero-content">
-                    <p class="hero-eyebrow">
+                    <p class="hero-eyebrow" data-reveal>
                         <span class="dot" aria-hidden="true"></span>
                         Portafolio · Colombia
                     </p>
 
-                    <h1 class="hero-title">Dairon Orejuela<span class="hero-dot">.</span></h1>
+                    <h1 class="hero-title" data-reveal>Dairon Orejuela<span class="hero-dot">.</span></h1>
 
-                    <p class="hero-role">Estudiante de Ingeniería de Telecomunicaciones e Informática</p>
+                    <p class="hero-role" data-reveal>Estudiante de Ingeniería de Telecomunicaciones e Informática</p>
 
-                    <p class="hero-summary">
+                    <p class="hero-summary" data-reveal>
                         Orientado al desarrollo de software: aplicaciones web, interfaces y
                         experiencias digitales. Construyo proyectos reales y documento
                         lo que aprendo en el camino.
                     </p>
 
                     <div class="hero-actions">
-                        <a class="btn btn-primary" href="#proyectos">
+                        <a class="btn btn-primary" href="#proyectos" data-reveal>
                             Ver proyectos <i class="ri-arrow-right-line" aria-hidden="true"></i>
                         </a>
-                        <a class="btn btn-ghost" href="#contacto">Contacto</a>
-                        <button class="btn btn-quiet" type="button" data-print>
+                        <a class="btn btn-ghost" href="#contacto" data-reveal>Contacto</a>
+                        <button class="btn btn-quiet" type="button" data-print data-reveal>
                             <i class="ri-printer-line" aria-hidden="true"></i> Guardar CV
                         </button>
                     </div>
@@ -170,7 +184,7 @@
                     <div class="hero-links" data-render="links" data-variant="hero"></div>
                 </div>
 
-                <aside class="hero-media" aria-label="Ficha de perfil">
+                <aside class="hero-media" aria-label="Ficha de perfil" data-reveal>
                     <div class="hero-photo" data-photo hidden></div>
 
                     <div class="spec" data-spec>
@@ -479,8 +493,13 @@
         </div>
     </dialog>
 
+    <script src="js/vendor/gsap.min.js"></script>
+    <script src="js/vendor/ScrollTrigger.min.js"></script>
     <script src="js/logos.js"></script>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/liquid-nav.js"></script>
+    <script src="js/effects.js"></script>
 </body>
 </html>

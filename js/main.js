@@ -69,7 +69,7 @@
         renderPhoto();
         pruneEmptySections();
         stampYear();
-        setupReveal();
+        // El reveal de entrada ahora lo gestiona js/animations.js con GSAP.
         setupHeader();
         setupNav();
         setupTheme();
@@ -103,7 +103,9 @@
                         '</a>';
                 }
 
-                return '<a href="' + esc(url) + '"' + attrs +
+                var reveal = variant === 'hero' ? ' data-reveal' : '';
+
+                return '<a href="' + esc(url) + '"' + attrs + reveal +
                     ' aria-label="' + esc(label) + '">' + icon(l.icon) + '</a>';
             }).join('');
         });

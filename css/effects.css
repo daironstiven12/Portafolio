@@ -1,0 +1,237 @@
+/* ==========================================================================
+   effects.css — Capa de efectos visuales (ambiente, tarjetas eléctricas,
+   foco de luz, carrusel 3D de certificados).
+   Todo usa los tokens de tokens.css; no cambia la estructura del sitio.
+   Se carga después de main.css y se apoya en js/effects.js.
+   ========================================================================== */
+
+@property --ea {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+/* --------------------------- 1. LUZ AMBIENTAL --------------------------- */
+/* Manchas de color desenfocadas detrás de todo: dan al vidrio de la barra
+   algo que refractar y profundidad al fondo casi negro. */
+body::before {
+    content: '';
+    position: fixed;
+    inset: -10vmax;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(38vmax 38vmax at 14% 12%, rgba(13, 110, 253, 0.26), transparent 70%),
+        radial-gradient(34vmax 34vmax at 88% 30%, rgba(102, 16, 242, 0.20), transparent 70%),
+        radial-gradient(30vmax 30vmax at 52% 96%, rgba(13, 110, 253, 0.14), transparent 70%);
+    animation: ambient-drift 26s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+.light-theme body::before {
+    background:
+        radial-gradient(38vmax 38vmax at 14% 12%, rgba(10, 88, 202, 0.16), transparent 70%),
+        radial-gradient(34vmax 34vmax at 88% 30%, rgba(102, 16, 242, 0.10), transparent 70%),
+        radial-gradient(30vmax 30vmax at 52% 96%, rgba(10, 88, 202, 0.09), transparent 70%);
+}
+
+@keyframes ambient-drift {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    50%  { transform: translate3d(2.5vmax, 3vmax, 0) scale(1.06); }
+    100% { transform: translate3d(-2vmax, -2vmax, 0) scale(1.02); }
+}
+
+.svg-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* ----------------------- 2. FOCO DE LUZ (spotlight) ---------------------- */
+/* js/effects.js escribe --mx / --my en el elemento bajo el puntero. */
+.project-card::after,
+.cert-card::after,
+.tool-btn::after,
+.spec::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s var(--ease);
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%),
+        var(--accent-soft), transparent 70%);
+    z-index: 1;
+}
+
+.project-card:hover::after,
+.cert-card:hover::after,
+.tool-btn:hover::after,
+.spec:hover::after {
+    opacity: 1;
+}
+
+.cert-card,
+.tool-btn,
+.spec {
+    position: relative;
+}
+
+/* --------------------- 3. TARJETAS ELÉCTRICAS (Proyectos) ---------------- */
+.project-card {
+    position: relative;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    padding: 1.5px;
+    pointer-events: none;
+    background: conic-gradient(from var(--ea),
+        transparent 0deg, transparent 220deg,
+        var(--primary) 285deg, #7fb0ff 320deg, transparent 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    filter: url(#electric) drop-shadow(0 0 5px var(--primary));
+    opacity: 0;
+    transition: opacity 0.35s var(--ease);
+    animation: electric-spin 3.2s linear infinite;
+    animation-play-state: paused;
+}
+
+.project-card:hover::before,
+.project-card:focus-within::before {
+    opacity: 1;
+    animation-play-state: running;
+}
+
+@keyframes electric-spin {
+    to { --ea: 360deg; }
+}
+
+/* Resplandor exterior sutil mientras está activa */
+.project-card:hover {
+    box-shadow: var(--shadow-lg), 0 0 38px -12px var(--primary);
+}
+
+/* ------------------- 4. CARRUSEL 3D (Certificados) ----------------------- */
+.cert-grid.is-carousel {
+    display: block;
+    position: relative;
+    perspective: 1300px;
+    height: 340px;
+    margin-bottom: 70px;
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+}
+
+.cert-grid.is-carousel.is-dragging {
+    cursor: grabbing;
+}
+
+.cert-ring {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 0;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.22, 0.9, 0.3, 1.06);
+}
+
+.cert-grid.is-dragging .cert-ring {
+    transition: none;
+}
+
+.cert-slot {
+    position: absolute;
+    top: 24px;
+    left: calc(var(--cw) / -2);
+    width: var(--cw);
+    transform: rotateY(var(--a)) translateZ(var(--r));
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: opacity 0.5s var(--ease), filter 0.5s var(--ease);
+    opacity: 0.42;
+    filter: saturate(0.7);
+}
+
+.cert-slot.is-front {
+    opacity: 1;
+    filter: none;
+}
+
+.cert-slot .cert-card {
+    height: auto;
+    align-content: start;
+    box-shadow: var(--shadow-lg);
+}
+
+.cert-slot:not(.is-front) .cert-card {
+    pointer-events: auto;
+}
+
+.cert-nav {
+    position: absolute;
+    left: 50%;
+    bottom: -62px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cert-nav button {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    color: var(--text);
+    font-size: 1.15rem;
+    transition: var(--transition);
+}
+
+.cert-nav button:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: scale(1.08);
+}
+
+.cert-count {
+    min-width: 54px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    letter-spacing: 0.16em;
+    color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before,
+    .project-card::before {
+        animation: none;
+    }
+}
+
+@media print {
+    body::before,
+    .project-card::before,
+    .project-card::after,
+    .cert-nav {
+        display: none !important;
+    }
+}
