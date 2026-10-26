@@ -292,3 +292,34 @@
 .st-word {
     display: inline-block;
 }
+
+/* ------------------ 7. PROGRESO DE LECTURA EN LA BARRA ------------------ */
+/* Línea de 2px en el borde inferior del vidrio. La pista usa --line (token
+   de trazo) y el avance --primary. La crea js/reading-progress.js. */
+
+.read-progress {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--line);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.read-progress-fill {
+    display: block;
+    width: var(--read, 0%);
+    height: 100%;
+    border-radius: inherit;
+    background: var(--primary);
+    transition: width 0.12s linear;
+}
+
+@media print {
+    .read-progress {
+        display: none !important;
+    }
+}
