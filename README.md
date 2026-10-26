@@ -17,8 +17,8 @@ js/main.js          Renderizado, menú, tema, scroll-spy, reveal, formulario, li
 assets/favicon.svg  Favicon (monograma "D")
 assets/logos/       27 SVG normalizados de la sección de herramientas
 assets/projects/    Capturas reales de los proyectos (JPEG 1200×750)
-Perfil1.jpg         Fotografía profesional (1280×963)
-Certificado-Imag/   Escaneados de los certificados (PNG)
+Perfil1.webp        Fotografía profesional (1280×963; el original Perfil1.jpg se conserva)
+Certificado-Imag/   Escaneados de los certificados (WebP; los PNG originales se conservan)
 scripts/            validate.js (CI) + build-logos.js y logos-cache.json
 .github/            CI (validate + node --check) y Dependabot (github-actions)
 ```
@@ -39,7 +39,7 @@ Todo lo repetible vive en **`js/data.js`**. No hace falta tocar HTML ni CSS.
 
 | Qué | Dónde |
 | --- | --- |
-| Foto de perfil | `profile.photo` (ahora `Perfil1.jpg`) |
+| Foto de perfil | `profile.photo` (ahora `Perfil1.webp`) |
 | GitHub / LinkedIn / Vercel / Netlify / CV | `links[].url` |
 | Áreas de especialización | `areas` |
 | Proyectos (demo, vista previa, imagen, año) | `projects` |

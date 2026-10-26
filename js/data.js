@@ -13,7 +13,7 @@
      honesto antes que el contenido inventado.
 
     GUÍA RÁPIDA DE EDICIÓN
-    · Foto de perfil ......... profile.photo   (Perfil1.jpg)
+    · Foto de perfil ......... profile.photo   (Perfil1.webp)
     · Estadísticas del hero .. stats           (studyYears es opcional)
     · Enlaces sociales ....... links           (rellena url para mostrarlos)
     · Áreas ................. areas
@@ -29,7 +29,7 @@ window.SITE = {
     profile: {
         // Ruta relativa a la fotografía profesional. Vacío = sin fotografía.
         // Si se rellena, la ficha técnica del hero se sustituye por la imagen.
-        photo: 'Perfil1.jpg',
+        photo: 'Perfil1.webp',
         photoAlt: 'Dairon Orejuela'
     },
 
@@ -439,7 +439,9 @@ window.SITE = {
     //     institution: 'Institución emisora'
     //     date:        '11 de febrero de 2026'
     //     description: 'Descripción breve y verificable (aparece en el lightbox)'
-    //     image:       'Certificado-Imag/Nombre-del-archivo.png'
+    //     image:       'Certificado-Imag/Nombre-del-archivo.webp'
+    //     imageWidth:  ancho real en px (evita el salto de layout)
+    //     imageHeight: alto real en px
     //     verifyUrl:   'https://...'
     certificates: [
         {
@@ -447,7 +449,9 @@ window.SITE = {
             institution: 'Ministerio TIC · IU Training',
             date: '16 de julio de 2026',
             description: 'Bootcamp de 159 horas con IU Training, la Universidad de Antioquia, la Universidad de Caldas y Ubicua Technology.',
-            image: 'Certificado-Imag/Imagen-Certificado-Uno.png',
+            image: 'Certificado-Imag/Imagen-Certificado-Uno.webp',
+            imageWidth: 697,
+            imageHeight: 532,
             verifyUrl: ''
         },
         {
@@ -455,7 +459,9 @@ window.SITE = {
             institution: 'IU Training · Talento Tech Región 2',
             date: '26 y 27 de junio de 2026',
             description: 'Hackathon de 24 horas en modalidad presencial en Medellín y virtual en Caldas, Antioquia, Quindío, Chocó y Risaralda.',
-            image: 'Certificado-Imag/Imagen-Certificado-cinco.png',
+            image: 'Certificado-Imag/Imagen-Certificado-cinco.webp',
+            imageWidth: 676,
+            imageHeight: 522,
             verifyUrl: ''
         },
         {
@@ -463,7 +469,9 @@ window.SITE = {
             institution: 'Ministerio TIC · Canal Trece · UDISTAJE',
             date: '13 de mayo de 2026',
             description: 'Taller de 3 horas dentro del Encuentro de Ecosistemas de Innovación Digital – Colombia 5.0.',
-            image: 'Certificado-Imag/Imagen-Certificado-tres.png',
+            image: 'Certificado-Imag/Imagen-Certificado-tres.webp',
+            imageWidth: 845,
+            imageHeight: 566,
             verifyUrl: ''
         },
         {
@@ -471,7 +479,9 @@ window.SITE = {
             institution: 'Cisco Networking Academy',
             date: '11 de febrero de 2026',
             description: '',
-            image: 'Certificado-Imag/Imagen-Certificado-six.png',
+            image: 'Certificado-Imag/Imagen-Certificado-six.webp',
+            imageWidth: 699,
+            imageHeight: 474,
             verifyUrl: ''
         },
         {
@@ -479,7 +489,9 @@ window.SITE = {
             institution: 'Cisco Networking Academy',
             date: '11 de febrero de 2026',
             description: '',
-            image: 'Certificado-Imag/Imagen-Certificado-sexen.png',
+            image: 'Certificado-Imag/Imagen-Certificado-sexen.webp',
+            imageWidth: 699,
+            imageHeight: 473,
             verifyUrl: ''
         },
         {
@@ -487,7 +499,9 @@ window.SITE = {
             institution: 'Cisco Networking Academy',
             date: '11 de febrero de 2026',
             description: '',
-            image: 'Certificado-Imag/Imagen-Certificado-Octavo.png',
+            image: 'Certificado-Imag/Imagen-Certificado-Octavo.webp',
+            imageWidth: 872,
+            imageHeight: 590,
             verifyUrl: ''
         },
         {
@@ -495,7 +509,9 @@ window.SITE = {
             institution: 'COPNIA — Consejo Profesional Nacional de Ingeniería',
             date: '1 de diciembre de 2022',
             description: 'Certificación de 36 horas.',
-            image: 'Certificado-Imag/Imagen-Certificado-dos.png',
+            image: 'Certificado-Imag/Imagen-Certificado-dos.webp',
+            imageWidth: 791,
+            imageHeight: 591,
             verifyUrl: ''
         }
     ]

@@ -32,6 +32,12 @@
             .replace(/"/g, '&quot;');
     }
 
+    /* Entero positivo para atributos width/height; cualquier otra cosa => ''. */
+    function num(v) {
+        var n = parseInt(v, 10);
+        return n > 0 ? String(n) : '';
+    }
+
     function icon(name) {
         return has(name) ? '<i class="' + esc(name) + '" aria-hidden="true"></i>' : '';
     }
@@ -424,7 +430,10 @@
                 ' aria-label="Ampliar: ' + esc(c.title) + '">' +
                 (has(c.image)
                     ? '<div class="cert-thumb"><img src="' + esc(c.image) + '" alt="' +
-                      esc(c.title) + '" loading="lazy" decoding="async">' +
+                      esc(c.title) + '"' +
+                      (has(c.imageWidth) ? ' width="' + num(c.imageWidth) + '"' : '') +
+                      (has(c.imageHeight) ? ' height="' + num(c.imageHeight) + '"' : '') +
+                      ' loading="lazy" decoding="async">' +
                       '<span class="cert-zoom" aria-hidden="true">' +
                       '<i class="ri-fullscreen-line"></i></span></div>'
                     : '') +
@@ -772,9 +781,15 @@
                 if (has(c.image)) {
                     img.src = c.image;
                     img.alt = val(c.title);
+                    if (has(c.imageWidth)) img.setAttribute('width', num(c.imageWidth));
+                    else img.removeAttribute('width');
+                    if (has(c.imageHeight)) img.setAttribute('height', num(c.imageHeight));
+                    else img.removeAttribute('height');
                     img.parentNode.hidden = false;
                 } else {
                     img.removeAttribute('src');
+                    img.removeAttribute('width');
+                    img.removeAttribute('height');
                     img.alt = '';
                     img.parentNode.hidden = true;
                 }
