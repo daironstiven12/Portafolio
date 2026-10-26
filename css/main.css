@@ -2179,6 +2179,16 @@ html.js [data-reveal] {
         margin: 14mm;
     }
 
+    /* El revelado por scroll (js/animations.js) deja opacity/transform en
+       línea. Sin esta regla, imprimir sin haber recorrido la página genera
+       un CV con secciones vacías: la declaración !important con !important
+       en hoja gana al estilo en línea. */
+    html.js [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+    }
+
     body {
         background: #fff !important;
         color: #000 !important;

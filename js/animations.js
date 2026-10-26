@@ -49,13 +49,13 @@
             defaults: { ease: EASE, duration: DUR }
         });
 
-        tl.fromTo(q('.hero-eyebrow'), { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1 })
-          .fromTo(q('.hero-title'),   { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1 }, '-=0.28')
-          .fromTo(q('.hero-role'),    { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1 }, '-=0.22')
-          .fromTo(q('.hero-summary'), { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1 }, '-=0.18')
-          .fromTo(q('.hero-actions .btn'), { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1 }, '-=0.14')
-          .fromTo(q('.hero-links a'), { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.09 }, '-=0.16')
-          .fromTo(q('.hero-media'), { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1 }, '-=0.35');
+        tl.fromTo(q('.hero-eyebrow'), { y: 20, opacity: 0 }, { y: 0, opacity: 1 })
+          .fromTo(q('.hero-title'),   { y: 24, opacity: 0 }, { y: 0, opacity: 1 }, '-=0.28')
+          .fromTo(q('.hero-role'),    { y: 16, opacity: 0 }, { y: 0, opacity: 1 }, '-=0.22')
+          .fromTo(q('.hero-summary'), { y: 16, opacity: 0 }, { y: 0, opacity: 1 }, '-=0.18')
+          .fromTo(q('.hero-actions .btn'), { y: 16, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1 }, '-=0.14')
+          .fromTo(q('.hero-links a'), { y: 14, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.09 }, '-=0.16')
+          .fromTo(q('.hero-media'), { y: 20, opacity: 0 }, { y: 0, opacity: 1 }, '-=0.35');
     }
 
     /* ========================= REVELADO POR SECCIÓN ======================= */
@@ -64,8 +64,12 @@
         var targets = gsap.utils.toArray(targetsSel);
         if (!trigger || !targets.length) return;
 
-        gsap.fromTo(targets, { autoAlpha: 0, y: 18 }, {
-            autoAlpha: 1, y: 0,
+        /* Se anima SOLO opacity (nunca autoAlpha): autoAlpha añade
+           visibility:hidden y los elementos dejan de ser alcanzables con el
+           Tab, así que un usuario de teclado se saltaba secciones enteras
+           todavía no reveladas. Ver el guard de focusin más abajo. */
+        gsap.fromTo(targets, { opacity: 0, y: 18 }, {
+            opacity: 1, y: 0,
             duration: DUR,
             ease: EASE,
             stagger: stagger || 0.1,
@@ -86,7 +90,7 @@
 
         // Cabeceras de sección: aparición suave, una sola vez cada una.
         document.querySelectorAll('.section-head').forEach(function (head) {
-            gsap.fromTo(head, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0,
+            gsap.fromTo(head, { opacity: 0, y: 14 }, { opacity: 1, y: 0,
                 duration: DUR, ease: EASE,
                 scrollTrigger: { trigger: head, start: START, once: true }
             });
@@ -96,8 +100,8 @@
         var contact = document.querySelector('#contacto');
         if (contact) {
             gsap.fromTo(gsap.utils.toArray('#contacto .contact-info, #contacto .contact-form'),
-                { autoAlpha: 0, y: 16 },
-                { autoAlpha: 1, y: 0,
+                { opacity: 0, y: 16 },
+                { opacity: 1, y: 0,
                     duration: DUR, ease: EASE,
                     stagger: 0.12,
                     scrollTrigger: { trigger: contact, start: START, once: true }
@@ -108,13 +112,29 @@
         var footer = document.querySelector('.site-footer');
         if (footer) {
             gsap.fromTo(gsap.utils.toArray('.footer-brand, .footer-col, .footer-bottom'),
-                { autoAlpha: 0, y: 14 },
-                { autoAlpha: 1, y: 0,
+                { opacity: 0, y: 14 },
+                { opacity: 1, y: 0,
                     duration: DUR, ease: EASE,
                     stagger: 0.12,
                     scrollTrigger: { trigger: footer, start: 'top 88%', once: true }
                 });
         }
+    }
+
+    /* ==================== ENFOQUE DE TECLADO (guard) ===================== */
+    /* Un elemento revelado al scroll está a opacity 0 pero sigue siendo
+       enfocable: si el foco del teclado llega antes de que el trigger lo
+       muestre, se revela de inmediato para que no haya foco «invisible». */
+    function keyboardGuard() {
+        document.addEventListener('focusin', function (e) {
+            var el = e.target;
+            if (!el || !el.closest) return;
+            var host = el.closest('[data-reveal]');
+            if (!host) return;
+            if (Number(gsap.getProperty(host, 'opacity')) > 0.98) return;
+            gsap.killTweensOf(host);
+            gsap.set(host, { opacity: 1, y: 0 });
+        });
     }
 
     /* ======================== PREFERENCIA DE MOVIMIENTO ==================== */
@@ -125,6 +145,7 @@
         try {
             heroIntro();
             sectionReveals();
+            keyboardGuard();
         } catch (err) {
             if (window.console && console.error) {
                 console.error('[portafolio/animations] error al iniciar animaciones:', err);
