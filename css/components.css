@@ -323,3 +323,50 @@
         display: none !important;
     }
 }
+
+/* ------------------------ 8. HALO DE CURSOR ----------------------------- */
+/* Acompaña al puntero en escritorio con puntero fino (js/cursor.js). Capa
+   decorativa: no sustituye al cursor ni intercepta clics. El escalado vive
+   en un nodo interno para que la posición pueda seguir al puntero sin
+   transición (y el crecimiento sí la tenga, suave). */
+
+.cursor-halo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2500;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(var(--cx, -100px), var(--cy, -100px), 0);
+    transition: opacity 0.2s var(--ease);
+    will-change: transform;
+}
+
+.cursor-halo.is-on {
+    opacity: 1;
+}
+
+.cursor-halo-dot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--primary);
+    background: var(--accent-soft);
+    border-radius: 50%;
+    transform: scale(1);
+    transition: transform 0.25s var(--ease), background-color 0.25s var(--ease);
+}
+
+.cursor-halo.is-hot .cursor-halo-dot {
+    transform: scale(2);
+    background: var(--accent-soft);
+}
+
+@media print {
+    .cursor-halo {
+        display: none !important;
+    }
+}
