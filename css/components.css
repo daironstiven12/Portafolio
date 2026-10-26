@@ -177,3 +177,32 @@
         display: grid !important;
     }
 }
+
+/* -------------------------- 3. PROFUNDIDAD DEL HERO --------------------- */
+/* La ficha/fotografía inclina suavemente con el puntero (solo puntero fino
+   y sin movimiento reducido: js/hero-depth.js escribe --tilt-x / --tilt-y y
+   --glide-x / --glide-y). La inclinación va en los HIJOS de .hero-media,
+   no en el contenedor, para no chocar con la animación de entrada de GSAP. */
+
+.hero-media > *:not(.hero-halo) {
+    transform: perspective(1000px)
+        rotateX(var(--tilt-x, 0deg))
+        rotateY(var(--tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.55s var(--ease);
+    will-change: transform;
+}
+
+/* Halo azul detrás de la ficha: da al vidrio algo que refractar y separa
+   la tarjeta del fondo sin sombras nuevas. */
+.hero-halo {
+    position: absolute;
+    inset: -12% -8%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, var(--hero-halo), transparent 72%);
+    filter: blur(26px);
+    transform: translate3d(var(--glide-x, 0px), var(--glide-y, 0px), 0);
+    transition: transform 0.6s var(--ease);
+    pointer-events: none;
+}

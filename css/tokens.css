@@ -57,6 +57,8 @@
 
     /* --- Efectos --- */
     --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.45);
+    /* Halo azul detrás de la ficha del hero (css/components.css) */
+    --hero-halo: rgba(13, 110, 253, 0.30);
     --ease: cubic-bezier(0.2, 0.6, 0.3, 1);
     --transition:
         color 0.18s var(--ease),
@@ -103,6 +105,7 @@
     --success-soft: rgba(53, 179, 126, 0.16);
 
     --shadow-lg: 0 20px 48px rgba(16, 20, 26, 0.14);
+    --hero-halo: rgba(10, 88, 202, 0.20);
 
     --glass-bg: rgba(255, 255, 255, 0.50);
     --glass-border: rgba(255, 255, 255, 0.65);
