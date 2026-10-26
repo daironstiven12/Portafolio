@@ -14,6 +14,7 @@
 
     GUÍA RÁPIDA DE EDICIÓN
     · Foto de perfil ......... profile.photo   (Perfil1.jpg)
+    · Estadísticas del hero .. stats           (studyYears es opcional)
     · Enlaces sociales ....... links           (rellena url para mostrarlos)
     · Áreas ................. areas
     · Proyectos ............. projects         (demoUrl / previewUrl / image)
@@ -30,6 +31,17 @@ window.SITE = {
         // Si se rellena, la ficha técnica del hero se sustituye por la imagen.
         photo: 'Perfil1.jpg',
         photoAlt: 'Dairon Orejuela'
+    },
+
+    /* ---------------------------- Estadísticas --------------------------- */
+    // Números del hero. Regla del sitio: lo que sea 0 o esté vacío no se
+    // muestra, y nada se deduce de datos que no estén declarados.
+    // · Proyectos publicados y certificados se calculan solos desde las
+    //   listas de este archivo (projects / certificates).
+    // · studyYears es un dato declarado por ti: años de estudio. Déjalo
+    //   vacío ('') mientras no quieras mostrarlo.
+    stats: {
+        studyYears: ''
     },
 
     /* ------------------------------- Enlaces ----------------------------- */

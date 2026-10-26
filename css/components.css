@@ -206,3 +206,44 @@
     transition: transform 0.6s var(--ease);
     pointer-events: none;
 }
+
+/* ------------------------- 4. ESTADÍSTICAS DEL HERO --------------------- */
+/* Los valores los pinta js/hero-stats.js desde data.js. Cada dato es una
+   marca técnica: filete azul, número en tipografía de display y etiqueta
+   en mono versalita, igual que el resto del sitio. */
+
+.hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(18px, 3vw, 38px);
+    margin-bottom: 30px;
+}
+
+.hero-stats:empty {
+    display: none;
+}
+
+.stat {
+    display: grid;
+    gap: 5px;
+    align-content: start;
+    padding-left: 14px;
+    border-left: 2px solid var(--primary);
+}
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 2.6vw, 2rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
