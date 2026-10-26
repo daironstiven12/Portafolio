@@ -253,12 +253,17 @@ window.SITE = {
 
     /* ---------------------------- Herramientas --------------------------- */
     // Cada ítem: key (assets/logos/<key>.svg + clase .lg-<key>), name y desc.
+    // Cada grupo: kind decide en qué pestaña de la sección aparece:
+    //     'tech' => Tecnologías · 'tool' => Herramientas
+    //   (sin kind => se asume 'tech'). Si solo queda una pestaña con
+    //   contenido, no se muestran pestañas y todo aparece junto.
     // Regla: SOLO herramientas/tecnologías con evidencia real en los proyectos
     // (repositorios propios, package.json, requirements.txt, Dockerfile,
     // eas.json, despliegues publicados). Nada por moda.
     tools: [
         {
             group: 'IA y apoyo',
+            kind: 'tool',
             icon: 'ri-openai-fill',
             note: 'La inteligencia artificial forma parte de mi flujo de trabajo como herramienta de apoyo; el análisis, las decisiones técnicas y el desarrollo siguen bajo mi responsabilidad.',
             items: [
@@ -282,6 +287,7 @@ window.SITE = {
         },
         {
             group: 'Desarrollo',
+            kind: 'tool',
             icon: 'ri-terminal-box-line',
             note: '',
             items: [
@@ -294,6 +300,7 @@ window.SITE = {
         },
         {
             group: 'Frontend',
+            kind: 'tech',
             icon: 'ri-code-s-slash-line',
             note: '',
             items: [
@@ -312,6 +319,7 @@ window.SITE = {
         },
         {
             group: 'Backend y datos',
+            kind: 'tech',
             icon: 'ri-stack-fill',
             note: '',
             items: [
@@ -325,6 +333,7 @@ window.SITE = {
         },
         {
             group: 'Despliegue',
+            kind: 'tool',
             icon: 'ri-global-line',
             note: 'No solo desarrollo aplicaciones: también trabajo los procesos de despliegue y publicación, desde el build hasta el dominio en producción.',
             items: [

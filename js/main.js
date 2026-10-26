@@ -400,6 +400,9 @@
         });
 
         window.addEventListener('resize', placeAll);
+        /* js/tools-tabs.js lo despacha al mostrar un panel: los tooltips del
+           panel recién visible se colocan con su medida real. */
+        box.addEventListener('tools:relayout', placeAll);
         placeAll();
     }
 

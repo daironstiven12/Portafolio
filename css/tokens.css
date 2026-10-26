@@ -48,6 +48,7 @@
     --container: 1180px;
     --gutter: clamp(20px, 5vw, 44px);
     --section-y: clamp(72px, 9vw, 124px);
+    --stack-gap: clamp(34px, 4.2vw, 56px);
     --header-h: 68px;
 
     /* --- Formas --- */

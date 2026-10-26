@@ -1434,7 +1434,7 @@ a.tl-title:hover {
 
 .tool-rows {
     display: grid;
-    gap: clamp(34px, 4.2vw, 56px);
+    gap: var(--stack-gap);
 }
 
 .tool-cat {
