@@ -174,8 +174,9 @@
             /* --- Tecnologías confirmadas --- */
             var tech = arr(p.technologies).filter(has);
 
-            /* --- Acciones: solo despliegues reales, nunca repositorios --- */
-            var actions = '';
+            /* --- Acciones: detalle siempre; despliegues solo si existen --- */
+            var actions = '<button class="btn btn-ghost" type="button" data-project-detail>' +
+                '<i class="ri-file-text-line" aria-hidden="true"></i> Detalle</button>';
             if (demo) {
                 actions += '<a class="btn btn-primary" href="' + esc(demo) + '"' +
                     ' target="_blank" rel="noopener noreferrer">Ver proyecto' +
@@ -190,6 +191,7 @@
 
             return '<article class="project-card"' +
                 ' id="' + esc(id) + '"' +
+                ' data-project="' + i + '"' +
                 (demo ? ' data-demo="' + esc(demo) + '"' : '') +
                 (has(p.filter) ? ' data-filter="' + esc(p.filter) + '"' : '') +
                 ' data-reveal>' +
@@ -220,9 +222,10 @@
         if (count) count.textContent = pad2(projects.length);
     }
 
-    /* --- Clic sobre la tarjeta => abrir el despliegue en pestaña nueva.
-       El enlace del título y los botones ya navegan por su cuenta; aquí solo
-       se cubre el resto de la tarjeta. Sin demoUrl no hay data-demo. --- */
+    /* --- Clic sobre la tarjeta => abrir su detalle. El enlace del título,
+       el botón «Detalle» y los botones de despliegue ya hacen lo suyo;
+       aquí solo se cubre el resto de la tarjeta. El evento lo recoge
+       js/project-dialog.js, que es quien gestiona el <dialog>. --- */
     function setupProjectCards() {
         var box = qs('[data-render="projects"]');
         if (!box) return;
@@ -234,10 +237,10 @@
             var sel = window.getSelection && window.getSelection();
             if (sel && String(sel).length) return;
 
-            var card = e.target.closest('.project-card[data-demo]');
+            var card = e.target.closest('.project-card');
             if (!card) return;
 
-            window.open(card.getAttribute('data-demo'), '_blank', 'noopener,noreferrer');
+            card.dispatchEvent(new CustomEvent('project:detail', { bubbles: true }));
         });
     }
 

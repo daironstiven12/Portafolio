@@ -104,6 +104,8 @@ window.SITE = {
     //   Si todos los proyectos comparten una sola categoría (o ninguna la
     //   tiene), los filtros no se muestran.
     // · Sin demoUrl no se pinta ningún botón ni es enlace la tarjeta.
+    // · repoUrl   => URL del repositorio público. Vacío => el botón «Código»
+    //   del modal de detalle no se pinta.
     // · El orden de este array es el orden de la sección.
     projects: [
         {
@@ -118,6 +120,7 @@ window.SITE = {
             image: 'assets/projects/web-contenedor-v2.jpg',
             previewIcon: '',
             demoUrl: 'https://web-contenedor-v2.vercel.app/',
+            repoUrl: '',
             year: ''
         },
         {
@@ -132,6 +135,7 @@ window.SITE = {
             image: 'assets/projects/hackathon-choco.jpg',
             previewIcon: '',
             demoUrl: 'https://hackathon-choc-quibd.vercel.app/',
+            repoUrl: '',
             year: ''
         },
         {
@@ -146,6 +150,7 @@ window.SITE = {
             image: 'assets/projects/dedicacion-eterna.jpg',
             previewIcon: '',
             demoUrl: 'https://dedicacioneterna.netlify.app/',
+            repoUrl: '',
             year: ''
         },
         {
@@ -160,6 +165,7 @@ window.SITE = {
             image: '',
             previewIcon: 'ri-robot-2-line',
             demoUrl: '',
+            repoUrl: '',
             year: ''
         },
         {
@@ -174,6 +180,7 @@ window.SITE = {
             image: 'assets/projects/vocales-app.jpg',
             previewIcon: '',
             demoUrl: '',
+            repoUrl: '',
             year: ''
         },
         {
@@ -189,6 +196,7 @@ window.SITE = {
             previewIcon: '',
             demoUrl: 'https://cavaltec-frontend.vercel.app/',
             previewUrl: 'https://cavaltec-frontend-n9c1mn262-ds-projects-684b7b77.vercel.app/',
+            repoUrl: '',
             year: ''
         },
         {
@@ -203,6 +211,7 @@ window.SITE = {
             image: 'assets/projects/viajefamilia.jpg',
             previewIcon: '',
             demoUrl: 'https://unique-truffle-ec8dc3.netlify.app/',
+            repoUrl: '',
             year: ''
         },
         {
@@ -217,6 +226,7 @@ window.SITE = {
             image: 'assets/projects/tirso-evarista.jpg',
             previewIcon: '',
             demoUrl: 'https://tiny-tarsier-76837c.netlify.app/',
+            repoUrl: '',
             year: ''
         },
         {
@@ -231,6 +241,7 @@ window.SITE = {
             image: 'assets/projects/aula-digital.jpg',
             previewIcon: '',
             demoUrl: 'https://symphonious-salamander-28bf03.netlify.app/',
+            repoUrl: '',
             year: ''
         },
         {
@@ -245,6 +256,7 @@ window.SITE = {
             image: 'assets/projects/binova-ia.jpg',
             previewIcon: '',
             demoUrl: 'https://gorgeous-gumption-576096.netlify.app/',
+            repoUrl: '',
             year: ''
         },
         {
@@ -259,6 +271,7 @@ window.SITE = {
             image: 'assets/projects/py-logica.jpg',
             previewIcon: '',
             demoUrl: 'https://thunderous-kitten-3bb002.netlify.app/',
+            repoUrl: '',
             year: ''
         }
     ],

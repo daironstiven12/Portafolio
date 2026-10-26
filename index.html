@@ -282,7 +282,7 @@
                         <p class="section-lede">
                             Proyectos reales: aplicaciones desplegadas, proyectos de
                             hackathon, comercio web y material de enseñanza. Cada tarjeta
-                            abre el proyecto desplegado.
+                            abre su detalle; desde ahí accedes al proyecto publicado.
                         </p>
                     </div>
                     <p class="section-count" data-count="projects" aria-hidden="true"></p>
@@ -505,6 +505,47 @@
         </div>
     </dialog>
 
+    <!-- ==================== DETALLE DE PROYECTO ========================== -->
+    <!-- Mismo lenguaje visual que el lightbox de certificados. Lo abre
+         js/project-dialog.js desde cualquier tarjeta de proyecto. -->
+    <dialog class="lightbox project-dialog" id="project-dialog"
+            aria-labelledby="project-dialog-title">
+        <div class="lightbox-inner">
+            <button class="lightbox-close" type="button" data-dialog-close aria-label="Cerrar detalle">
+                <i class="ri-close-line" aria-hidden="true"></i>
+            </button>
+
+            <div class="lightbox-media" data-dialog-media hidden>
+                <img id="project-dialog-img" src="" alt="" width="1200" height="750"
+                     loading="lazy" decoding="async">
+            </div>
+
+            <div class="lightbox-body">
+                <p class="lightbox-meta" id="project-dialog-meta"></p>
+                <h2 class="lightbox-title" id="project-dialog-title"></h2>
+                <p class="lightbox-desc" id="project-dialog-desc"></p>
+                <ul class="dialog-tech" id="project-dialog-tech"></ul>
+                <div class="dialog-actions">
+                    <a class="btn btn-primary" id="project-dialog-demo" href="#" target="_blank"
+                       rel="noopener noreferrer" hidden>
+                        Ver demo <i class="ri-external-link-line" aria-hidden="true"></i>
+                        <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                    </a>
+                    <a class="btn btn-ghost" id="project-dialog-repo" href="#" target="_blank"
+                       rel="noopener noreferrer" hidden>
+                        Código <i class="ri-github-line" aria-hidden="true"></i>
+                        <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                    </a>
+                    <a class="btn btn-ghost" id="project-dialog-preview" href="#" target="_blank"
+                       rel="noopener noreferrer" hidden>
+                        Vista previa del despliegue
+                        <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
     <script src="js/vendor/gsap.min.js"></script>
     <script src="js/vendor/ScrollTrigger.min.js"></script>
     <script src="js/logos.js"></script>
@@ -517,5 +558,6 @@
     <script src="js/tools-tabs.js"></script>
     <script src="js/hero-depth.js"></script>
     <script src="js/hero-stats.js"></script>
+    <script src="js/project-dialog.js"></script>
 </body>
 </html>

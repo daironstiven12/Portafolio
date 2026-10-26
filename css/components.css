@@ -247,3 +247,39 @@
     text-transform: uppercase;
     color: var(--muted);
 }
+
+/* ------------------- 5. MODAL DE DETALLE DE PROYECTO -------------------- */
+/* Reutiliza las clases .lightbox del lightbox de certificados; aquí solo se
+   ajustan la zona de imagen (la preview del proyecto) y las acciones. */
+
+.project-dialog .lightbox-media img {
+    width: 100%;
+    max-height: 46vh;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+.dialog-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dialog-tech:empty {
+    display: none;
+}
+
+.dialog-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+/* Toda tarjeta de proyecto abre su detalle al hacer clic */
+.project-card[data-project] {
+    cursor: pointer;
+}
