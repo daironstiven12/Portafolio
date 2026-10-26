@@ -283,3 +283,12 @@
 .project-card[data-project] {
     cursor: pointer;
 }
+
+/* ----------------- 6. REVELADO POR PALABRA DE TITULARES ----------------- */
+/* js/section-titles.js parte cada .section-title en palabras con data-reveal.
+   Solo necesitan display:inline-block para que GSAP les aplique transform:
+   el texto, los espacios y la lectura por voz no cambian. */
+
+.st-word {
+    display: inline-block;
+}
