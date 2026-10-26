@@ -33,7 +33,7 @@
     <meta name="robots" content="index, follow">
     <meta name="author" content="Dairon Orejuela">
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#f1f3f6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#e6edfb" media="(prefers-color-scheme: light)">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -74,6 +74,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/effects.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/motion.css">
 
     <!-- Tema antes del primer pintado: evita el destello del tema equivocado.
          En archivo externo (y no en línea) para que la CSP pueda exigir
@@ -125,6 +126,16 @@
                 </feOffset>
                 <feDisplacementMap in="SourceGraphic" in2="o" scale="5" xChannelSelector="R" yChannelSelector="B"/>
             </filter>
+            <linearGradient id="g-gemini" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#4285f4"/><stop offset=".5" stop-color="#9b72cb"/><stop offset="1" stop-color="#d96570"/>
+            </linearGradient>
+            <linearGradient id="g-vite" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#41d1ff"/><stop offset="1" stop-color="#bd34fe"/>
+            </linearGradient>
+            <linearGradient id="g-python" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#3776ab"/><stop offset=".5" stop-color="#3776ab"/>
+                <stop offset=".5" stop-color="#ffd43b"/><stop offset="1" stop-color="#ffd43b"/>
+            </linearGradient>
         </defs>
     </svg>
 
@@ -194,9 +205,9 @@
                             Ver proyectos <i class="ri-arrow-right-line" aria-hidden="true"></i>
                         </a>
                         <a class="btn btn-ghost" href="#contacto" data-reveal>Contacto</a>
-                        <button class="btn btn-quiet" type="button" data-print data-reveal>
-                            <i class="ri-printer-line" aria-hidden="true"></i> Guardar CV
-                        </button>
+                        <a class="btn btn-quiet" href="assets/CV_Dairon_Orejuela.pdf" download="CV_Dairon_Orejuela.pdf" data-reveal>
+                            <i class="ri-download-2-line" aria-hidden="true"></i> Descargar CV
+                        </a>
                     </div>
 
                     <ul class="hero-stats" data-render="stats"
@@ -233,6 +244,12 @@
                 </aside>
 
             </div>
+        </section>
+
+        <!-- ======================= MARQUESINA TECNOLOGÍAS ===================== -->
+        <section class="marquee" aria-label="Tecnologías y herramientas que uso">
+            <div class="marquee-row" data-marquee="tech"></div>
+            <div class="marquee-row" data-marquee="tool"></div>
         </section>
 
         <!-- ============================= PERFIL ============================= -->
@@ -363,10 +380,18 @@
                     </p>
                 </header>
 
-                <div class="tool-tabs" data-tool-tabs role="tablist"
-                     aria-label="Herramientas y tecnologías"></div>
+                <div class="tool-controls">
+                    <div class="tool-tabs" data-tool-tabs role="tablist"
+                         aria-label="Herramientas y tecnologías"></div>
+                    <div class="view-toggle" data-tool-view role="group" aria-label="Modo de vista">
+                        <span class="view-pill" aria-hidden="true"></span>
+                        <button class="view-btn" type="button" data-view="grid" aria-pressed="true"><i class="ri-layout-grid-line" aria-hidden="true"></i>Cuadrícula</button>
+                        <button class="view-btn" type="button" data-view="wheel" aria-pressed="false"><i class="ri-loader-3-line" aria-hidden="true"></i>Ruleta</button>
+                    </div>
+                </div>
 
                 <div class="tool-rows" data-render="tools"></div>
+                <div class="tool-wheel" data-tool-wheel hidden></div>
             </div>
         </section>
 
@@ -482,7 +507,7 @@
                         <li><a href="#proyectos">Proyectos publicados</a></li>
                         <li><a href="#capacidades">Áreas de especialización</a></li>
                         <li><a href="#trayectoria">Formación</a></li>
-                        <li><a href="#" data-print>Guardar CV</a></li>
+                        <li><a href="assets/CV_Dairon_Orejuela.pdf" download="CV_Dairon_Orejuela.pdf">Descargar CV</a></li>
                     </ul>
                 </div>
             </div>
@@ -579,5 +604,6 @@
     <script src="js/section-titles.js"></script>
     <script src="js/reading-progress.js"></script>
     <script src="js/cursor.js"></script>
+    <script src="js/tech-motion.js"></script>
 </body>
 </html>

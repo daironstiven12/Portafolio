@@ -1,0 +1,356 @@
+/* =====================================================================
+   motion.css — colores de marca, marquesina, ruleta, tema y microanimación
+   Se carga después de components.css. Todo respeta prefers-reduced-motion
+   y se oculta/neutraliza en @media print.
+   ===================================================================== */
+
+/* ---------- 1. Colores de marca (variante oscuro / claro) ------------- */
+.lg-openai      { --brand-d: #10a37f; --brand-l: #0b8a6a; }
+.lg-openrouter  { --brand-d: #7b7ff5; --brand-l: #5457e6; }
+.lg-vscode      { --brand-d: #35a7f2; --brand-l: #007acc; }
+.lg-powershell  { --brand-d: #5f9bff; --brand-l: #2671be; }
+.lg-git         { --brand-d: #f26b4f; --brand-l: #e0401f; }
+.lg-docker      { --brand-d: #2f9bf0; --brand-l: #1a82d6; }
+.lg-html5       { --brand-d: #f0623a; --brand-l: #e34f26; }
+.lg-css         { --brand-d: #3d9fe0; --brand-l: #1572b6; }
+.lg-javascript  { --brand-d: #f7df1e; --brand-l: #d9b800; }
+.lg-typescript  { --brand-d: #4a90e2; --brand-l: #3178c6; }
+.lg-react       { --brand-d: #61dafb; --brand-l: #14a6cf; }
+.lg-angular     { --brand-d: #f0364f; --brand-l: #dd0031; }
+.lg-tailwindcss { --brand-d: #22d3ee; --brand-l: #0891b2; }
+.lg-bootstrap   { --brand-d: #9a73d6; --brand-l: #7952b3; }
+.lg-fastapi     { --brand-d: #14b8a6; --brand-l: #00897b; }
+.lg-nodedotjs   { --brand-d: #6cc24a; --brand-l: #3f9a30; }
+.lg-nestjs      { --brand-d: #f2476f; --brand-l: #e0234e; }
+.lg-postgresql  { --brand-d: #5b8def; --brand-l: #336791; }
+.lg-prisma      { --brand-d: #6f7bf0; --brand-l: #4a55c9; }
+.lg-netlify     { --brand-d: #2ed9c9; --brand-l: #00a99d; }
+/* neutros (opencode, github, vercel, expo) usan el color del texto */
+.lg-vite        { --brand-d: #a56bff; --brand-l: #7c3aed; }
+.lg-googlegemini{ --brand-d: #8ab4f8; --brand-l: #4285f4; }
+.lg-python      { --brand-d: #4b8bbe; --brand-l: #3776ab; }
+
+:is(.tool-logo, .chip, .mq-item, .wheel-item) { --brand: var(--brand-d); }
+.light-theme :is(.tool-logo, .chip, .mq-item, .wheel-item) { --brand: var(--brand-l); }
+
+.tool-logo,
+.mq-logo,
+.wheel-logo { color: var(--brand, var(--text)); }
+
+/* Degradados de marca (definidos en <defs> del index) */
+.lg-googlegemini svg path { fill: url(#g-gemini); }
+.lg-vite svg path         { fill: url(#g-vite); }
+.lg-python svg path       { fill: url(#g-python); }
+
+.tool-logo { opacity: 1; filter: drop-shadow(0 0 0 transparent); }
+.tool-btn:hover .tool-logo,
+.tool-btn:focus-visible .tool-logo {
+    transform: translateY(-2px) scale(1.12);
+    filter: drop-shadow(0 6px 10px color-mix(in srgb, var(--brand, var(--primary)) 45%, transparent));
+}
+
+/* Flotación suave y desfasada de los logos */
+@keyframes logo-float {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 0 -3px; }
+}
+.tool-card:not(.is-open) .tool-logo { animation: logo-float 5.5s ease-in-out infinite; }
+.tool-card:nth-child(2n) .tool-logo { animation-delay: -1.4s; }
+.tool-card:nth-child(3n) .tool-logo { animation-delay: -2.9s; }
+.tool-card:nth-child(5n) .tool-logo { animation-delay: -4.1s; }
+
+/* Halo de marca al pasar el cursor sobre la tarjeta */
+.tool-btn { transition: border-color .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease), transform .25s var(--ease); }
+.tool-btn:hover,
+.tool-btn:focus-visible {
+    border-color: color-mix(in srgb, var(--brand-halo, var(--primary)) 55%, var(--line));
+    box-shadow: 0 10px 28px -12px color-mix(in srgb, var(--brand-halo, var(--primary)) 55%, transparent);
+}
+
+/* Chips con punto de color de marca */
+.chip[class*="lg-"]::before {
+    content: '';
+    width: 7px; height: 7px;
+    margin-right: 7px;
+    border-radius: 50%;
+    flex: none;
+    background: var(--brand, var(--muted));
+    box-shadow: 0 0 8px color-mix(in srgb, var(--brand, transparent) 60%, transparent);
+}
+
+/* ---------- 2. Marquesina de tecnologías ------------------------------ */
+.marquee {
+    position: relative;
+    display: grid;
+    gap: 14px;
+    padding: clamp(22px, 3vw, 34px) 0;
+    border-block: 1px solid var(--line);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+.marquee-row { display: flex; width: max-content; will-change: transform; }
+.marquee-set { display: flex; gap: 14px; padding-right: 14px; margin: 0; list-style: none; }
+.marquee:hover .marquee-row { cursor: default; }
+
+.mq-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px 9px 12px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(10px) saturate(1.4);
+            backdrop-filter: blur(10px) saturate(1.4);
+    font-family: var(--font-display);
+    font-size: .88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--text);
+    transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.mq-item:hover {
+    transform: translateY(-3px) scale(1.04);
+    border-color: color-mix(in srgb, var(--brand, var(--primary)) 60%, transparent);
+    box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--brand, var(--primary)) 60%, transparent);
+}
+.mq-logo { display: grid; place-items: center; width: 24px; height: 24px; }
+.mq-logo > svg { width: 100%; height: 100%; fill: currentColor; display: block; }
+
+/* ---------- 3. Selector Cuadrícula / Ruleta --------------------------- */
+.tool-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 20px;
+}
+.tool-controls > .tool-tabs { flex: 1 1 auto; min-width: 0; }
+
+.view-toggle {
+    position: relative;
+    display: inline-flex;
+    padding: 4px;
+    gap: 2px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+    flex: none;
+}
+.view-btn {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    color: var(--muted);
+    font: 500 .82rem var(--font-display);
+    cursor: pointer;
+    transition: color .25s var(--ease);
+}
+.view-btn[aria-pressed="true"] { color: var(--text); }
+.view-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.view-pill {
+    position: absolute;
+    top: 4px; bottom: 4px; left: 4px;
+    width: 0;
+    border-radius: 999px;
+    background: var(--glass-pill);
+    box-shadow: 0 0 0 1px var(--glass-pill-edge), 0 4px 12px -4px rgba(0,0,0,.35);
+    transition: transform .45s cubic-bezier(.34,1.3,.64,1), width .45s cubic-bezier(.34,1.3,.64,1);
+}
+
+.tool-tabs[hidden], .tool-rows[hidden], .tool-wheel[hidden] { display: none !important; }
+
+/* ---------- 4. Ruleta 3D ---------------------------------------------- */
+.tool-wheel { margin-top: clamp(18px, 3vw, 30px); text-align: center; }
+.wheel-stage {
+    position: relative;
+    height: clamp(200px, 26vw, 240px);
+    perspective: 1300px;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: pan-y;
+    border-radius: var(--radius);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    outline: none;
+}
+.wheel-stage.is-drag { cursor: grabbing; }
+.wheel-stage:focus-visible { box-shadow: 0 0 0 2px var(--primary); }
+.wheel-ring {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 0; height: 0;
+    transform-style: preserve-3d;
+}
+.wheel-item {
+    position: absolute;
+    left: 0; top: 0;
+    width: 104px; height: 124px;
+    margin: -62px 0 0 -52px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+    color: var(--text);
+    font: 500 .76rem var(--font-display);
+    text-align: center;
+    padding: 8px;
+    opacity: calc(.22 + var(--f, 0) * .78);
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    transition: border-color .25s, box-shadow .25s;
+    -webkit-user-select: none; user-select: none;
+    cursor: pointer;
+}
+.wheel-item.is-front {
+    border-color: color-mix(in srgb, var(--brand, var(--primary)) 65%, transparent);
+    box-shadow: 0 0 34px -6px color-mix(in srgb, var(--brand, var(--primary)) 55%, transparent);
+}
+.wheel-logo { width: 40px; height: 40px; display: grid; place-items: center; }
+.wheel-logo > svg { width: 100%; height: 100%; fill: currentColor; }
+.wheel-name { line-height: 1.2; overflow-wrap: anywhere; }
+
+.wheel-info {
+    margin: 6px auto 0;
+    max-width: 560px;
+    min-height: 92px;
+}
+.wheel-info-name {
+    font: 600 1.25rem var(--font-display);
+    letter-spacing: -.02em;
+    color: var(--text);
+}
+.wheel-info-desc { margin: 6px 0 0; color: var(--muted); font-size: var(--fs-sm); line-height: 1.6; }
+
+.wheel-actions { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.wheel-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    min-width: 44px; height: 44px; padding: 0 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--glass-bg);
+    color: var(--text);
+    font: 500 .85rem var(--font-display);
+    cursor: pointer;
+    transition: border-color .2s, transform .2s var(--ease), background .2s;
+}
+.wheel-btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+.wheel-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.wheel-btn--spin { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+/* ---------- 5. Tema: transición circular + icono que se transforma ---- */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
+
+.theme-toggle { position: relative; overflow: hidden; }
+.theme-toggle .theme-icon {
+    position: absolute;
+    display: block !important;
+    transition: transform .55s cubic-bezier(.34,1.4,.64,1), opacity .3s ease;
+}
+.theme-icon--light { transform: rotate(0) scale(1); opacity: 1; color: #f5a623; }
+.theme-icon--dark  { transform: rotate(-90deg) scale(.3); opacity: 0; color: #9db4ff; }
+.light-theme .theme-icon--light { transform: rotate(90deg) scale(.3); opacity: 0; }
+.light-theme .theme-icon--dark  { transform: rotate(0) scale(1); opacity: 1; }
+
+html { scrollbar-color: var(--line-strong) transparent; }
+
+/* ---------- 6. Pulido modo claro -------------------------------------- */
+.light-theme {
+    --glass-bg: rgba(255, 255, 255, 0.66);
+    --glass-border: rgba(16, 20, 26, 0.10);
+}
+.light-theme .mq-item,
+.light-theme .wheel-item,
+.light-theme .view-toggle { box-shadow: 0 1px 2px rgba(16,20,26,.06), 0 8px 22px -14px rgba(16,20,26,.25); }
+.light-theme .tool-btn,
+.light-theme .project-card,
+.light-theme .cert-card { box-shadow: 0 1px 2px rgba(16,20,26,.05), 0 12px 28px -18px rgba(16,20,26,.28); }
+.light-theme .wheel-item.is-front { background: #fff; }
+
+/* ---------- 6b. Modo claro con color (no todo blanco) ----------------- */
+.light-theme {
+    --body-bg: #e6edfb;
+    --surface: #f7f9ff;
+    --surface-2: #dde7f8;
+    --line: rgba(30, 52, 110, 0.15);
+    --line-strong: rgba(30, 52, 110, 0.32);
+    --muted: #4b5873;
+    --hero-halo: rgba(40, 90, 220, 0.28);
+}
+.light-theme body {
+    background:
+        radial-gradient(900px 520px at 6% -4%, rgba(70, 120, 255, .26), transparent 62%),
+        radial-gradient(800px 520px at 100% 6%, rgba(160, 110, 255, .22), transparent 60%),
+        radial-gradient(900px 600px at 50% 100%, rgba(40, 190, 200, .16), transparent 65%),
+        var(--body-bg);
+    background-attachment: fixed;
+}
+.light-theme main > .section:nth-of-type(even) {
+    background: linear-gradient(180deg, rgba(255,255,255,.0), rgba(255,255,255,.32) 18%, rgba(255,255,255,.32) 82%, rgba(255,255,255,0));
+}
+.light-theme main > .section:nth-of-type(odd) {
+    background: linear-gradient(180deg, transparent, rgba(60,100,210,.07) 20%, rgba(60,100,210,.07) 80%, transparent);
+}
+.light-theme .tool-btn,
+.light-theme .project-card,
+.light-theme .cert-card { background: #fbfcff; }
+.light-theme .marquee { background: rgba(255,255,255,.35); border-color: var(--line); }
+.light-theme .site-footer, .light-theme footer { background: linear-gradient(180deg, transparent, rgba(40,80,200,.08)); }
+
+/* ---------- 7. Línea de trayectoria que se dibuja --------------------- */
+.tl-body { border-left-color: transparent; }
+.tl-body::after {
+    content: '';
+    position: absolute;
+    left: -1px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(var(--primary), color-mix(in srgb, var(--primary) 40%, transparent));
+    transform: scaleY(var(--draw, 1));
+    transform-origin: top;
+}
+.tl-body { background: linear-gradient(var(--line), var(--line)) left / 1px 100% no-repeat; }
+.tl-body::before { transition: background .35s, box-shadow .35s; z-index: 1; }
+.tl-body.is-lit::before { background: var(--primary); box-shadow: 0 0 0 4px var(--accent-soft); }
+
+/* ---------- 8. Brillo en botón principal ------------------------------ */
+.btn-primary { position: relative; overflow: hidden; isolation: isolate; }
+.btn-primary::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    z-index: -1;
+}
+.btn-primary:hover::after { transform: translateX(120%); transition: transform .7s var(--ease); }
+
+/* ---------- 9. Movimiento reducido e impresión ------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .tool-card .tool-logo { animation: none !important; }
+    .view-pill, .theme-toggle .theme-icon { transition: none; }
+    .btn-primary:hover::after { transition: none; }
+}
+@media (max-width: 640px) {
+    .tool-controls { flex-direction: column; align-items: stretch; }
+    .view-toggle { align-self: flex-start; }
+    .wheel-item { width: 92px; height: 112px; margin: -56px 0 0 -46px; }
+}
+@media print {
+    .marquee, .view-toggle, .tool-wheel { display: none !important; }
+    .tool-rows[hidden], .tool-tabs[hidden] { display: block !important; }
+    .tool-logo { animation: none !important; filter: none !important; }
+    .tl-body::after { transform: none !important; }
+}
