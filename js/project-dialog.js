@@ -45,6 +45,15 @@
             .replace(/"/g, '&quot;');
     }
 
+    /* Traduce una clave de js/i18n.js; si no existe, usa el valor de data.js. */
+    function localized(key, fallback) {
+        if (window.I18N && typeof window.I18N.t === 'function') {
+            var text = window.I18N.t(key);
+            if (text && text !== key) return text;
+        }
+        return val(fallback);
+    }
+
     /* Un enlace que no tenga dato en data.js no se pinta */
     function setLink(el, url) {
         if (!el) return;
@@ -72,18 +81,24 @@
         var p = projects[Number(card.getAttribute('data-project'))];
         if (!p) return;
 
+        var baseKey = 'project.' + (val(p.id) || card.getAttribute('data-project'));
+        var projectTitle = localized(baseKey + '.title', p.title);
+        var projectDesc = localized(baseKey + '.desc', p.description);
+        var projectCategory = localized(baseKey + '.category', p.category);
+        var projectStatus = localized(baseKey + '.status', p.status);
+
         /* --- Metadatos: categoría, estado y año, solo si existen --- */
         var parts = [];
-        if (has(p.category)) parts.push(val(p.category));
-        if (has(p.status)) parts.push(val(p.status));
+        if (has(projectCategory)) parts.push(val(projectCategory));
+        if (has(projectStatus)) parts.push(val(projectStatus));
         if (has(p.year)) parts.push(val(p.year));
         meta.textContent = parts.join(' · ');
         meta.hidden = !parts.length;
 
-        title.textContent = val(p.title);
+        title.textContent = projectTitle;
 
-        desc.textContent = val(p.description);
-        desc.hidden = !has(p.description);
+        desc.textContent = projectDesc;
+        desc.hidden = !has(projectDesc);
 
         /* --- Tecnologías --- */
         var list = arr(p.technologies).filter(has);
@@ -95,7 +110,7 @@
         /* --- Imagen de vista previa --- */
         if (has(p.image)) {
             img.src = val(p.image);
-            img.alt = 'Vista previa de ' + val(p.title);
+            img.alt = localized('project.media.preview', 'Vista previa de') + ' ' + projectTitle;
             media.hidden = false;
         } else {
             img.removeAttribute('src');

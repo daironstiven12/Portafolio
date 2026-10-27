@@ -3,7 +3,8 @@
    --------------------------------------------------------------------------
    Diccionario plano: clave -> { es: "...", en: "..." }.
    Uso: i18n.t('clave') devuelve el texto en el idioma actual.
-   El cambio de idioma recarga la página y persiste en localStorage.
+   El cambio de idioma es dinámico (sin recargar), muestra la pantalla de
+   carga de marca y persiste en localStorage.
    ========================================================================== */
 
 (function () {
@@ -80,6 +81,8 @@
 
         // Proyectos: filtros, meta, botones
         'projects.filter.all': { es: 'Todos', en: 'All' },
+        'projects.filter.one': { es: ' proyecto mostrado.', en: ' project shown.' },
+        'projects.filter.many': { es: ' proyectos mostrados.', en: ' projects shown.' },
         'projects.count.label': { es: '', en: '' }, // se usa solo el número
         'projects.note': { es: 'Solo aparecen proyectos verificados con sus tecnologías reales. Aquellos con versión desplegada abren el sitio publicado en una pestaña nueva.', en: 'Only verified projects with their real technologies appear. Those with a deployed version open the published site in a new tab.' },
         'project.badge.main': { es: 'Principal', en: 'Main' },
@@ -87,6 +90,72 @@
         'project.btn.demo': { es: 'Ver proyecto', en: 'View project' },
         'project.btn.preview': { es: 'Vista previa del despliegue', en: 'Deployment preview' },
         'project.media.zoom': { es: 'Ampliar', en: 'Zoom' },
+        'project.media.preview': { es: 'Vista previa de', en: 'Preview of' },
+
+        // Proyectos (claves por id de js/data.js)
+        'project.web-contenedor-v2.title': { es: 'Web Contenedor V2', en: 'Web Contenedor V2' },
+        'project.web-contenedor-v2.desc': { es: 'Panel web para monitorear y gestionar contenedores inteligentes con visión artificial, con un modo de demostración interactiva que simula el flujo completo de reciclaje en un campus universitario.', en: 'Web panel for monitoring and managing smart containers with computer vision, featuring an interactive demo mode that simulates the full recycling flow on a university campus.' },
+        'project.web-contenedor-v2.category': { es: 'Panel de administración', en: 'Administration panel' },
+        'project.web-contenedor-v2.status': { es: 'Activo', en: 'Active' },
+
+        'project.hackathon-choco.title': { es: 'AtratoCentinela AI', en: 'AtratoCentinela AI' },
+        'project.hackathon-choco.desc': { es: 'Sistema de monitoreo del Río Atrato: mapa de estaciones, panel de crisis, seguimiento de nodos y agente de vigilancia ambiental.', en: 'Monitoring system for the Atrato River: station map, crisis dashboard, node tracking and an environmental surveillance agent.' },
+        'project.hackathon-choco.category': { es: 'Monitoreo ambiental', en: 'Environmental monitoring' },
+        'project.hackathon-choco.context': { es: 'Hackathon Chocó', en: 'Chocó Hackathon' },
+
+        'project.dedicacion-eterna.title': { es: 'Dedicación Eterna', en: 'Dedicación Eterna' },
+        'project.dedicacion-eterna.desc': { es: 'Sitio para libretas artesanales personalizadas: colección, galería, testimonios, boletín y contacto por WhatsApp, con modo oscuro y animaciones de entrada.', en: 'Website for personalized handmade notebooks: collection, gallery, testimonials, newsletter and WhatsApp contact, with dark mode and entrance animations.' },
+        'project.dedicacion-eterna.category': { es: 'Desarrollo web', en: 'Web development' },
+        'project.dedicacion-eterna.context': { es: 'Libretas artesanales', en: 'Handmade notebooks' },
+
+        'project.english-bot.title': { es: 'English Bot', en: 'English Bot' },
+        'project.english-bot.desc': { es: 'Bot de Telegram que envía la palabra del día en inglés: la genera con inteligencia artificial, la explica con un ejemplo corto y la lee en voz alta.', en: 'Telegram bot that sends the English word of the day: it generates it with artificial intelligence, explains it with a short example and reads it aloud.' },
+        'project.english-bot.category': { es: 'Automatización', en: 'Automation' },
+        'project.english-bot.context': { es: 'Proyecto de enseñanza', en: 'Teaching project' },
+
+        'project.vocales-app.title': { es: 'El Mundo de las Vocales', en: 'The World of Vowels' },
+        'project.vocales-app.desc': { es: 'Aplicación web infantil para aprender las vocales con audio, video introductorio, ficha por vocal y barra de progreso con puntaje.', en: "Children's web app to learn vowels with audio, an intro video, a card per vowel and a progress bar with scoring." },
+        'project.vocales-app.category': { es: 'Aplicación educativa', en: 'Educational app' },
+        'project.vocales-app.context': { es: 'Proyecto de enseñanza', en: 'Teaching project' },
+
+        'project.cavaltec.title': { es: 'CAVALTEC', en: 'CAVALTEC' },
+        'project.cavaltec.desc': { es: 'Autodiagnóstico de cumplimiento de la Ley 1581: evalúa la protección de datos de una organización, identifica brechas y propone recomendaciones con IA para cerrarlas.', en: "Compliance self-assessment for Law 1581: evaluates an organization's data protection, identifies gaps and proposes AI-driven recommendations to close them." },
+        'project.cavaltec.category': { es: 'Cumplimiento normativo', en: 'Regulatory compliance' },
+
+        'project.viajefamilia.title': { es: 'ViajeFamilia', en: 'ViajeFamilia' },
+        'project.viajefamilia.desc': { es: 'Plataforma para crear metas de ahorro colectivas en equipo y hacer realidad el viaje en familia: metas, seguimiento en tiempo real, chat familiar e información turística.', en: 'Platform to create collective savings goals as a team and make the family trip a reality: goals, real-time tracking, family chat and travel information.' },
+        'project.viajefamilia.category': { es: 'Aplicación web', en: 'Web application' },
+
+        'project.tirso-evarista.title': { es: 'Tirso & Evarista', en: 'Tirso & Evarista' },
+        'project.tirso-evarista.desc': { es: 'Sitio de boda con historia, galería de recuerdos, cuenta regresiva, detalles del evento y confirmación de asistencia.', en: 'Wedding website with story, memory gallery, countdown, event details and RSVP.' },
+        'project.tirso-evarista.category': { es: 'Sitio de evento', en: 'Event website' },
+        'project.tirso-evarista.context': { es: 'Boda · 13 dic 2025', en: 'Wedding · Dec 13, 2025' },
+
+        'project.aula-digital.title': { es: 'Aula Digital', en: 'Aula Digital' },
+        'project.aula-digital.desc': { es: 'Plataforma educativa con materias, lecciones interactivas, quizzes y juegos, con seguimiento del progreso de cada estudiante.', en: "Educational platform with subjects, interactive lessons, quizzes and games, tracking each student's progress." },
+        'project.aula-digital.category': { es: 'Plataforma educativa', en: 'Educational platform' },
+
+        'project.binova-ia.title': { es: 'BINOVA IA', en: 'BINOVA IA' },
+        'project.binova-ia.desc': { es: 'Contenedores inteligentes que clasifican residuos con visión por computadora y registran historial y trazabilidad en un ecosistema web y móvil.', en: 'Smart containers that classify waste with computer vision and record history and traceability across a web and mobile ecosystem.' },
+        'project.binova-ia.category': { es: 'IA e IoT', en: 'AI & IoT' },
+
+        'project.py-logica.title': { es: 'Py-lógica', en: 'Py-lógica' },
+        'project.py-logica.desc': { es: 'Plataforma educativa para aprender lógica de programación y Python: 15 módulos, 35 lecciones, quizzes y un editor de código integrado.', en: 'Educational platform to learn programming logic and Python: 15 modules, 35 lessons, quizzes and a built-in code editor.' },
+        'project.py-logica.category': { es: 'Plataforma educativa', en: 'Educational platform' },
+
+        // Trayectoria (claves por índice de js/data.js)
+        'timeline.0.title': { es: 'Ingeniería en Telecomunicaciones e Informática', en: 'Telecommunications & Computer Engineering' },
+        'timeline.0.period': { es: 'En curso', en: 'Ongoing' },
+        'timeline.0.desc': { es: 'Formación universitaria actual que combina la base de telecomunicaciones con el desarrollo de software.', en: 'Current university education combining the telecommunications foundation with software development.' },
+
+        'timeline.1.title': { es: 'Tecnólogo en Desarrollo de Software', en: 'Software Development Technologist' },
+        'timeline.1.desc': { es: 'Tecnología en Desarrollo de Software.', en: 'Software Development Technology.' },
+
+        'timeline.2.org': { es: 'Proyecto personal', en: 'Personal project' },
+        'timeline.3.org': { es: 'Hackathon Chocó', en: 'Chocó Hackathon' },
+        'timeline.4.org': { es: 'Proyecto personal', en: 'Personal project' },
+        'timeline.5.title': { es: 'El Mundo de las Vocales', en: 'The World of Vowels' },
+        'timeline.5.org': { es: 'Proyecto de enseñanza', en: 'Teaching project' },
 
         // Trayectoria
         'timeline.type.formacion': { es: 'Formación', en: 'Education' },
@@ -176,6 +245,36 @@
         'cert.zoom': { es: 'Ampliar', en: 'Enlarge' },
         'cert.verify': { es: 'Verificar certificado', en: 'Verify certificate' },
 
+        // Certificados (claves por índice de js/data.js)
+        'cert.0.title': { es: 'Bootcamp Programación Nivel Básico', en: 'Basic Level Programming Bootcamp' },
+        'cert.0.institution': { es: 'Ministerio TIC · IU Training', en: 'Ministry of ICT · IU Training' },
+        'cert.0.date': { es: '16 de julio de 2026', en: 'July 16, 2026' },
+        'cert.0.desc': { es: 'Bootcamp de 159 horas con IU Training, la Universidad de Antioquia, la Universidad de Caldas y Ubicua Technology.', en: '159-hour bootcamp with IU Training, the University of Antioquia, the University of Caldas and Ubicua Technology.' },
+
+        'cert.1.title': { es: 'Hackathon — Certificado de participación', en: 'Hackathon — Certificate of participation' },
+        'cert.1.institution': { es: 'IU Training · Talento Tech Región 2', en: 'IU Training · Talento Tech Region 2' },
+        'cert.1.date': { es: '26 y 27 de junio de 2026', en: 'June 26–27, 2026' },
+        'cert.1.desc': { es: 'Hackathon de 24 horas en modalidad presencial en Medellín y virtual en Caldas, Antioquia, Quindío, Chocó y Risaralda.', en: '24-hour hackathon held in person in Medellín and virtually in Caldas, Antioquia, Quindío, Chocó and Risaralda.' },
+
+        'cert.2.title': { es: 'Colombia 5.0 — Agentes de IA y Automatización de Procesos', en: 'Colombia 5.0 — AI Agents and Process Automation' },
+        'cert.2.institution': { es: 'Ministerio TIC · Canal Trece · UDISTAJE', en: 'Ministry of ICT · Canal Trece · UDISTAJE' },
+        'cert.2.date': { es: '13 de mayo de 2026', en: 'May 13, 2026' },
+        'cert.2.desc': { es: 'Taller de 3 horas dentro del Encuentro de Ecosistemas de Innovación Digital – Colombia 5.0.', en: '3-hour workshop within the Digital Innovation Ecosystems Meeting – Colombia 5.0.' },
+
+        'cert.3.title': { es: 'Exploración de IoT con Cisco Packet Tracer', en: 'IoT Exploration with Cisco Packet Tracer' },
+        'cert.3.date': { es: '11 de febrero de 2026', en: 'February 11, 2026' },
+
+        'cert.4.title': { es: 'Explorando redes con Cisco Packet Tracer', en: 'Exploring Networks with Cisco Packet Tracer' },
+        'cert.4.date': { es: '11 de febrero de 2026', en: 'February 11, 2026' },
+
+        'cert.5.title': { es: 'Introducción a Cisco Packet Tracer', en: 'Introduction to Cisco Packet Tracer' },
+        'cert.5.date': { es: '11 de febrero de 2026', en: 'February 11, 2026' },
+
+        'cert.6.title': { es: 'Ética Profesional', en: 'Professional Ethics' },
+        'cert.6.institution': { es: 'COPNIA — Consejo Profesional Nacional de Ingeniería', en: 'COPNIA — National Professional Council of Engineering' },
+        'cert.6.date': { es: '1 de diciembre de 2022', en: 'December 1, 2022' },
+        'cert.6.desc': { es: 'Certificación de 36 horas.', en: '36-hour certification.' },
+
         // Contacto
         'contact.lead': { es: 'El canal más directo es el correo. También encuentras el resto de perfiles cuando están publicados.', en: 'The most direct channel is email. You also find the rest of profiles when they are published.' },
         'contact.fact.location': { es: 'Ubicación', en: 'Location' },
@@ -229,6 +328,11 @@
         // Language switcher
         'lang.current': { es: 'ES', en: 'EN' },
         'lang.toggle': { es: 'Cambiar a inglés', en: 'Switch to Spanish' },
+
+        // Pantalla de carga (js/loader.js)
+        'loader.loading': { es: 'Cargando', en: 'Loading' },
+        'loader.opening': { es: 'Abriendo', en: 'Opening' },
+        'loader.switching': { es: 'Cambiando idioma', en: 'Switching language' },
     };
 
     // Idioma actual (por defecto ES, o el guardado)
@@ -246,30 +350,39 @@
 
     function setLang(lang) {
         if (lang !== 'es' && lang !== 'en') return;
+        if (lang === currentLang) return;
+
         currentLang = lang;
         try { localStorage.setItem('lang', lang); } catch (e) { /* noop */ }
-        
+
         // Start loading animation
         showLanguageLoader();
-        
-        // Update all translated elements immediately
-        updatePageTranslations();
-        
-        // Update document language
-        if (typeof document !== 'undefined') {
-            document.documentElement.lang = lang;
+
+        try {
+            // Update all translated elements immediately
+            updatePageTranslations();
+
+            // Update document language
+            if (typeof document !== 'undefined') {
+                document.documentElement.lang = lang;
+            }
+
+            // Update meta tags
+            updateMetaTags();
+
+            // Update language toggle button text
+            updateLanguageToggle();
+
+            // Avisar al resto de scripts (render dinámico, filtros, etc.)
+            if (typeof document !== 'undefined') {
+                document.dispatchEvent(new CustomEvent('languagechange', {
+                    detail: { lang: lang }
+                }));
+            }
+        } finally {
+            // Hide loading animation after short delay, even if a helper fails
+            setTimeout(hideLanguageLoader, 300);
         }
-        
-        // Update meta tags
-        updateMetaTags();
-        
-        // Update language toggle button text
-        updateLanguageToggle();
-        
-        // Hide loading animation after short delay
-        setTimeout(() => {
-            hideLanguageLoader();
-        }, 300);
     }
 
     function toggleLang() {
@@ -406,9 +519,10 @@
         // Update project count
         var count = document.querySelector('[data-count="projects"]');
         if (count && window.SITE && window.SITE.projects) {
-            count.textContent = pad2(window.SITE.projects.length);
+            var total = window.SITE.projects.length;
+            count.textContent = total < 10 ? '0' + total : String(total);
         }
-        
+
         // Update hero spec translations
         updateHeroSpecTranslations();
     }
@@ -435,47 +549,29 @@
         if (langText) {
             langText.textContent = currentLang.toUpperCase();
         }
-        
+
         var langToggle = document.querySelector('#lang-toggle');
         if (langToggle) {
-            var opposite = currentLang === 'es' ? 'en' : 'es';
-            langToggle.setAttribute('aria-label', currentLang === 'es' ? t('lang.toggle') : t('lang.toggle'));
-            langToggle.setAttribute('title', currentLang === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish');
+            langToggle.setAttribute('aria-label', t('lang.toggle'));
+            langToggle.setAttribute('title', t('lang.toggle'));
         }
     }
-    
+
     function showLanguageLoader() {
         if (typeof document === 'undefined') return;
-        
-        var loader = document.getElementById('lang-loader');
-        if (!loader) {
-            var loaderHtml = `
-                <div id="lang-loader" class="lang-loader">
-                    <div class="lang-loader-content">
-                        <div class="lang-loader-spinner"></div>
-                        <div class="lang-loader-text">Cambiando idioma...</div>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', loaderHtml);
-            loader = document.getElementById('lang-loader');
+
+        // La pantalla de carga de marca (js/loader.js) también se reutiliza
+        // para el cambio de idioma.
+        if (window.PageLoader && typeof window.PageLoader.show === 'function') {
+            window.PageLoader.show({ label: t('loader.switching') });
         }
-        
-        loader.classList.add('is-active');
     }
-    
+
     function hideLanguageLoader() {
         if (typeof document === 'undefined') return;
-        
-        var loader = document.getElementById('lang-loader');
-        if (loader) {
-            loader.classList.remove('is-active');
-            
-            setTimeout(() => {
-                if (loader.parentNode) {
-                    loader.parentNode.removeChild(loader);
-                }
-            }, 300);
+
+        if (window.PageLoader && typeof window.PageLoader.hide === 'function') {
+            window.PageLoader.hide();
         }
     }
 
@@ -487,50 +583,35 @@
         return currentLang === 'es' ? 'en' : 'es';
     }
 
-    // Exponer API global
+    // API pública única. Los helpers de actualización del DOM solo se usan
+    // desde el navegador; todas las funciones comprueban `document`.
     window.I18N = {
         t: t,
         getLang: getLang,
         setLang: setLang,
         toggleLang: toggleLang,
         getOppositeLang: getOppositeLang,
-        TRANSLATIONS: TRANSLATIONS
+        TRANSLATIONS: TRANSLATIONS,
+        updatePageTranslations: updatePageTranslations,
+        updateNavigationTranslations: updateNavigationTranslations,
+        updateHeroSpecTranslations: updateHeroSpecTranslations,
+        updateMetaTags: updateMetaTags,
+        updateLanguageToggle: updateLanguageToggle,
+        showLanguageLoader: showLanguageLoader,
+        hideLanguageLoader: hideLanguageLoader
     };
 
-    // Solo ejecutar el código del lado del cliente
-    if (typeof document !== 'undefined' && document.readyState === 'complete' || document.readyState !== 'loading') {
-        // Ejecutar después de que DOM esté listo
-        (function() {
-            // Exponer API global
-            window.I18N = {
-                t: t,
-                getLang: getLang,
-                setLang: setLang,
-                toggleLang: toggleLang,
-                getOppositeLang: getOppositeLang,
-                TRANSLATIONS: TRANSLATIONS,
-                updatePageTranslations: updatePageTranslations,
-                updateNavigationTranslations: updateNavigationTranslations,
-                updateHeroSpecTranslations: updateHeroSpecTranslations,
-                updateMetaTags: updateMetaTags,
-                updateLanguageToggle: updateLanguageToggle,
-                showLanguageLoader: showLanguageLoader,
-                hideLanguageLoader: hideLanguageLoader
-            };
+    if (typeof document !== 'undefined') {
+        // Aplicar idioma al HTML
+        document.documentElement.lang = currentLang;
 
-            // Aplicar idioma al HTML
-            document.documentElement.lang = currentLang;
-
-            // Esperar a que el DOM esté completamente cargado
-            if (document.readyState === 'complete') {
-                updateMetaTags();
-            } else {
-                document.addEventListener('DOMContentLoaded', updateMetaTags);
-            }
-        })();
+        // Los metadatos de <head> ya están disponibles al cargar este script,
+        // pero si se mueve al final del documento se espera al DOMContentLoaded.
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', updateMetaTags);
+        } else {
+            updateMetaTags();
+        }
     }
-
-    // Ejecutar al cargar (antes del render principal)
-    updateMetaTags();
 
 })();

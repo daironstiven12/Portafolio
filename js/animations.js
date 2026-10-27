@@ -137,13 +137,43 @@
         });
     }
 
+    /* Si la intro del hero falla (o la pantalla de carga no avisa), deja el
+       contenido visible para que nada quede oculto permanentemente. */
+    function revealFallback() {
+        var all = document.querySelectorAll('[data-reveal]');
+        for (var a = 0; a < all.length; a++) {
+            all[a].style.opacity = '1';
+            all[a].style.transform = 'none';
+            all[a].style.visibility = '';
+        }
+    }
+
+    function startHeroIntro() {
+        try {
+            heroIntro();
+        } catch (err) {
+            if (window.console && console.error) {
+                console.error('[portafolio/animations] error en la intro del hero:', err);
+            }
+            revealFallback();
+        }
+    }
+
     /* ======================== PREFERENCIA DE MOVIMIENTO ==================== */
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!reduceMotion) {
         // Movimiento normal: instalar animaciones de entrada y revelado por scroll.
         try {
-            heroIntro();
+            // La intro del hero espera a que la pantalla de carga termine de
+            // retirarse, para que el primer gesto que vea el usuario sea la
+            // entrada del contenido y no una animación oculta tras la capa.
+            if (window.PageLoader && typeof window.PageLoader.whenReady === 'function') {
+                window.PageLoader.whenReady(startHeroIntro);
+            } else {
+                startHeroIntro();
+            }
+
             sectionReveals();
             keyboardGuard();
         } catch (err) {
@@ -151,12 +181,7 @@
                 console.error('[portafolio/animations] error al iniciar animaciones:', err);
             }
             // Garantizar visibilidad aunque fallen las animaciones.
-            var all = document.querySelectorAll('[data-reveal]');
-            for (var a = 0; a < all.length; a++) {
-                all[a].style.opacity = '1';
-                all[a].style.transform = 'none';
-                all[a].style.visibility = '';
-            }
+            revealFallback();
         }
 
         // Refrescar ScrollTrigger cuando todos los recursos (imágenes, fuentes)

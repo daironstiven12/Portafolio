@@ -13,7 +13,10 @@ css/tokens.css      Sistema de diseño: color, tipografía, espaciado, tema clar
 css/main.css        Estilos de componentes + responsive + impresión (CV A4)
 js/theme-init.js    Aplica el tema antes del primer pintado (externo: la CSP lo exige)
 js/data.js          ← ÚNICO archivo que necesitas editar para cambiar contenido
+js/i18n.js          Diccionario ES/EN y cambio de idioma sin recargar
+js/loader.js        Pantalla de carga de marca (entrada y transición a proyectos)
 js/main.js          Renderizado, menú, tema, scroll-spy, reveal, formulario, lightbox
+css/loader.css      Animación del monograma «D» como pantalla de carga
 assets/favicon.svg  Favicon (monograma "D")
 assets/logos/       27 SVG normalizados de la sección de herramientas
 assets/projects/    Capturas reales de los proyectos (JPEG 1200×750)
@@ -60,8 +63,12 @@ Cada entrada de `projects` genera una tarjeta con preview, contexto, tecnología
 y acciones:
 
 - `demoUrl` ⇒ la preview se convierte en enlace, aparece el botón **Ver
-  proyecto** y **toda la tarjeta abre ese despliegue al hacer clic** (pestaña
-  nueva); la tarjeta expone `data-demo`.
+  proyecto** y **toda la tarjeta abre ese despliegue al hacer clic**; la
+  tarjeta expone `data-demo`. El sitio se abre en una pestaña nueva con la
+  pantalla de carga de marca ya visible en esa pestaña, para que el portafolio
+  no se quede bloqueado esperando a un sitio externo lento (también desde el
+  modal de detalle). Ctrl/Cmd/Shift o clic central conservan el comportamiento
+  nativo.
 - `previewUrl` ⇒ botón secundario **Vista previa del despliegue** para un
   segundo despliegue del mismo proyecto (vista previa de Vercel de CAVALTEC).
 - `image` ⇒ captura real (`assets/projects/*.jpg`, 1200×750). Si está vacía se
@@ -95,6 +102,21 @@ tarjetas comparten la altura de su fila, la misma área de imagen (`aspect-ratio
 
 Si en `timeline` usas `href: '#proyecto-mi-app'`, el id del proyecto se genera
 como `proyecto-` + `projects[].id`. Mantén ambos en sincronía.
+
+## Idioma y pantalla de carga
+
+- El botón **ES/EN** de la cabecera cambia el idioma sin recargar la página.
+  La elección se guarda en `localStorage.lang` y todo el contenido (incluidos
+  proyectos, trayectoria, certificados y herramientas) se vuelve a pintar con
+  las claves de `js/i18n.js`.
+- Al entrar, al cambiar de idioma y al abrir un proyecto (en la pestaña nueva)
+  se muestra `#page-loader`: el mismo monograma «D» del favicon, animado con
+  un flote suave, el punto azul latiendo y un arco girando. Respeta
+  `prefers-reduced-motion` y se oculta automáticamente sin JavaScript.
+- La intro del hero espera al evento `pageloader:done` para que la primera
+  animación que vea el usuario sea la entrada del contenido.
+- API pública: `window.PageLoader.show()`, `.hide()`, `.navigate(url)` y
+  `.whenReady(cb)`.
 
 ## Tema claro/oscuro
 

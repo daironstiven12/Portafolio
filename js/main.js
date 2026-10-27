@@ -52,6 +52,12 @@
         return key;
     }
 
+    /* Traduce una clave y, si no existe, usa el valor original de data.js. */
+    function localized(key, fallback) {
+        var text = t(key);
+        return text === key ? val(fallback) : text;
+    }
+
     function getLang() {
         if (window.I18N && typeof window.I18N.getLang === 'function') {
             return window.I18N.getLang();
@@ -98,6 +104,9 @@
         setupLightbox();
         setupLangToggle();
         translateStaticUI();
+
+        // Re-pintar los bloques generados desde data.js al cambiar de idioma.
+        document.addEventListener('languagechange', refreshDynamicContent);
     }
 
     /* --- Traducir elementos estáticos del HTML que tienen data-i18n --- */
@@ -207,33 +216,39 @@
             var id = has(p.id) ? 'proyecto-' + val(p.id) : 'proyecto-' + i;
             var demo = has(p.demoUrl) ? val(p.demoUrl) : '';
             var previewUrl = has(p.previewUrl) ? val(p.previewUrl) : '';
+            var baseKey = 'project.' + (has(p.id) ? val(p.id) : i);
+            var title = localized(baseKey + '.title', p.title);
+            var description = localized(baseKey + '.desc', p.description);
+            var category = localized(baseKey + '.category', p.category);
+            var status = localized(baseKey + '.status', p.status);
+            var context = localized(baseKey + '.context', p.context);
 
             /* --- Preview: imagen real si existe, si no placa tipográfica --- */
             var media = has(p.image)
-                ? '<img src="' + esc(p.image) + '" alt="Vista previa de ' + esc(p.title) + '"' +
+                ? '<img src="' + esc(p.image) + '" alt="' + esc(t('project.media.preview')) + ' ' + esc(title) + '"' +
                   ' width="1200" height="750" loading="lazy" decoding="async">'
                 : '<span class="project-plate">' +
                   '<i class="' + esc(has(p.previewIcon) ? val(p.previewIcon) : 'ri-code-box-line') +
                   '" aria-hidden="true"></i>' +
-                  '<span class="project-plate-label">' + esc(p.title) + '</span>' +
+                  '<span class="project-plate-label">' + esc(title) + '</span>' +
                   '</span>';
 
             /* --- Etiqueta de contexto sobre la preview --- */
-            var badge = has(p.context)
-                ? '<span class="project-context">' + esc(p.context) + '</span>'
+            var badge = has(context)
+                ? '<span class="project-context">' + esc(context) + '</span>'
                 : '';
 
             var preview = demo
                 ? '<a class="project-media" href="' + esc(demo) + '"' +
-                  ' target="_blank" rel="noopener noreferrer"' +
+                  ' target="_blank" rel="noopener noreferrer" data-loader' +
                   ' tabindex="-1" aria-hidden="true">' + badge + media +
                   '<span class="project-zoom"><i class="ri-fullscreen-line" aria-hidden="true"></i></span></a>'
                 : '<div class="project-media">' + badge + media + '</div>';
 
             /* --- Línea de metadatos --- */
             var meta = '';
-            if (has(p.category)) meta += '<span>' + esc(p.category) + '</span>';
-            if (has(p.status)) meta += '<span class="status">' + esc(p.status) + '</span>';
+            if (has(category)) meta += '<span>' + esc(category) + '</span>';
+            if (has(status)) meta += '<span class="status">' + esc(status) + '</span>';
             if (has(p.year)) meta += '<span>' + esc(p.year) + '</span>';
 
             /* --- Tecnologías confirmadas --- */
@@ -244,14 +259,13 @@
                 '<i class="ri-file-text-line" aria-hidden="true"></i> ' + esc(t('project.btn.detail')) + '</button>';
             if (demo) {
                 actions += '<a class="btn btn-primary" href="' + esc(demo) + '"' +
-                    ' target="_blank" rel="noopener noreferrer">' + esc(t('project.btn.demo')) +
-                    '<i class="ri-arrow-right-line" aria-hidden="true"></i>' +
-                    '<span class="sr-only"> ' + esc(t('dialog.newtab')) + '</span></a>';
+                    ' target="_blank" rel="noopener noreferrer" data-loader>' + esc(t('project.btn.demo')) +
+                    '<i class="ri-arrow-right-line" aria-hidden="true"></i></a>';
             }
             if (previewUrl) {
                 actions += '<a class="btn btn-ghost" href="' + esc(previewUrl) + '"' +
-                    ' target="_blank" rel="noopener noreferrer">' + esc(t('project.btn.preview')) +
-                    '<span class="sr-only"> ' + esc(t('dialog.newtab')) + '</span></a>';
+                    ' target="_blank" rel="noopener noreferrer" data-loader>' + esc(t('project.btn.preview')) +
+                    '</a>';
             }
 
             return '<article class="project-card"' +
@@ -268,11 +282,11 @@
                 '</div>' +
                 '<h3 class="project-title">' +
                 (demo
-                    ? '<a href="' + esc(demo) + '" target="_blank" rel="noopener noreferrer">' +
-                      esc(p.title) + '<span class="sr-only"> ' + esc(t('dialog.newtab')) + '</span></a>'
-                    : esc(p.title)) +
+                    ? '<a href="' + esc(demo) + '" target="_blank" rel="noopener noreferrer" data-loader>' +
+                      esc(title) + '</a>'
+                    : esc(title)) +
                 '</h3>' +
-                (has(p.description) ? '<p class="project-desc">' + esc(p.description) + '</p>' : '') +
+                (has(description) ? '<p class="project-desc">' + esc(description) + '</p>' : '') +
                 (tech.length
                     ? '<ul class="project-tech">' + tech.map(function (x) {
                         return '<li class="chip">' + esc(x) + '</li>';
@@ -314,14 +328,20 @@
         var box = qs('[data-render="timeline"]');
         if (!box) return;
 
-        box.innerHTML = arr(SITE.timeline).map(function (tl) {
+        box.innerHTML = arr(SITE.timeline).map(function (tl, i) {
             if (!tl) return '';
             var type = val(tl.type) || 'proyecto';
             var label = typeLabel(type);
+            var baseKey = 'timeline.' + i;
+            var titleText = localized(baseKey + '.title', tl.title);
+            var org = localized(baseKey + '.org', tl.org);
+            var period = localized(baseKey + '.period', tl.period);
+            var desc = localized(baseKey + '.desc', tl.description);
+
             var title = has(tl.href)
-                ? '<a class="tl-title" href="' + esc(tl.href) + '">' + esc(tl.title) +
+                ? '<a class="tl-title" href="' + esc(tl.href) + '">' + esc(titleText) +
                   '<i class="ri-arrow-right-line" aria-hidden="true"></i></a>'
-                : '<h3 class="tl-title">' + esc(tl.title) + '</h3>';
+                : '<h3 class="tl-title">' + esc(titleText) + '</h3>';
 
             var tags = arr(tl.tags).filter(has).map(function (x) {
                 return '<span class="chip">' + esc(x) + '</span>';
@@ -329,13 +349,13 @@
 
             return '<div class="tl-item" data-reveal>' +
                 '<div class="tl-rail">' +
-                (has(tl.period) ? '<span class="tl-period">' + esc(tl.period) + '</span>' : '') +
+                (has(period) ? '<span class="tl-period">' + esc(period) + '</span>' : '') +
                 '<span class="tl-badge tl-badge--' + esc(type) + '">' + esc(label) + '</span>' +
                 '</div>' +
                 '<div class="tl-body">' +
                 title +
-                (has(tl.org) ? '<p class="tl-org">' + esc(tl.org) + '</p>' : '') +
-                (has(tl.description) ? '<p class="tl-desc">' + esc(tl.description) + '</p>' : '') +
+                (has(org) ? '<p class="tl-org">' + esc(org) + '</p>' : '') +
+                (has(desc) ? '<p class="tl-desc">' + esc(desc) + '</p>' : '') +
                 (tags ? '<div class="tl-tags">' + tags + '</div>' : '') +
                 '</div>' +
                 '</div>';
@@ -516,15 +536,19 @@
 
         box.innerHTML = arr(SITE.certificates).map(function (c, i) {
             if (!c) return '';
+            var baseKey = 'cert.' + i;
+            var certTitle = localized(baseKey + '.title', c.title);
+            var institution = localized(baseKey + '.institution', c.institution);
+            var date = localized(baseKey + '.date', c.date);
             var meta = '';
-            if (has(c.institution)) meta += esc(c.institution);
-            if (has(c.date)) meta += (meta ? ' · ' : '') + '<span class="cert-date">' + esc(c.date) + '</span>';
+            if (has(institution)) meta += esc(institution);
+            if (has(date)) meta += (meta ? ' · ' : '') + '<span class="cert-date">' + esc(date) + '</span>';
 
             return '<button class="cert-card" type="button" data-reveal data-cert="' + i + '"' +
-                ' aria-label="' + esc(t('cert.zoom')) + ': ' + esc(c.title) + '">' +
+                ' aria-label="' + esc(t('cert.zoom')) + ': ' + esc(certTitle) + '">' +
                 (has(c.image)
                     ? '<div class="cert-thumb"><img src="' + esc(c.image) + '" alt="' +
-                      esc(c.title) + '"' +
+                      esc(certTitle) + '"' +
                       (has(c.imageWidth) ? ' width="' + num(c.imageWidth) + '"' : '') +
                       (has(c.imageHeight) ? ' height="' + num(c.imageHeight) + '"' : '') +
                       ' loading="lazy" decoding="async">' +
@@ -532,7 +556,7 @@
                       '<i class="ri-fullscreen-line"></i></span></div>'
                     : '') +
                 '<div>' +
-                '<h3 class="cert-title">' + esc(c.title) + '</h3>' +
+                '<h3 class="cert-title">' + esc(certTitle) + '</h3>' +
                 (meta ? '<p class="cert-inst">' + meta + '</p>' : '') +
                 '</div>' +
                 '</button>';
@@ -931,22 +955,29 @@
         document.addEventListener('click', function (e) {
             var card = e.target.closest ? e.target.closest('[data-cert]') : null;
             if (card) {
-                var c = arr(SITE.certificates)[Number(card.getAttribute('data-cert'))];
+                var certIndex = Number(card.getAttribute('data-cert'));
+                var c = arr(SITE.certificates)[certIndex];
                 if (!c) return;
 
+                var baseKey = 'cert.' + certIndex;
+                var certTitle = localized(baseKey + '.title', c.title);
+                var certDesc = localized(baseKey + '.desc', c.description);
+                var institution = localized(baseKey + '.institution', c.institution);
+                var date = localized(baseKey + '.date', c.date);
+
                 var parts = [];
-                if (has(c.institution)) parts.push(c.institution);
-                if (has(c.date)) parts.push(c.date);
+                if (has(institution)) parts.push(institution);
+                if (has(date)) parts.push(date);
                 meta.textContent = parts.join(' · ');
                 meta.hidden = !parts.length;
 
-                title.textContent = val(c.title);
-                desc.textContent = val(c.description);
-                desc.hidden = !has(c.description);
+                title.textContent = certTitle;
+                desc.textContent = certDesc;
+                desc.hidden = !has(certDesc);
 
                 if (has(c.image)) {
                     img.src = c.image;
-                    img.alt = val(c.title);
+                    img.alt = certTitle;
                     if (has(c.imageWidth)) img.setAttribute('width', num(c.imageWidth));
                     else img.removeAttribute('width');
                     if (has(c.imageHeight)) img.setAttribute('height', num(c.imageHeight));
@@ -993,16 +1024,42 @@
         var textSpan = qs('.lang-text', btn);
         if (textSpan) textSpan.textContent = lang.toUpperCase();
 
-        // aria-label = idioma al que cambia
-        var opposite = lang === 'es' ? 'en' : 'es';
-        btn.setAttribute('aria-label', lang === 'es' ? t('lang.toggle') : t('lang.toggle'));
-        btn.setAttribute('title', lang === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish');
+        btn.setAttribute('aria-label', t('lang.toggle'));
+        btn.setAttribute('title', t('lang.toggle'));
 
         btn.addEventListener('click', function () {
             if (window.I18N && typeof window.I18N.toggleLang === 'function') {
                 window.I18N.toggleLang();
             }
         });
+    }
+
+    /* Al cambiar de idioma, los bloques generados desde js/data.js deben
+       volver a pintarse con las claves traducidas. Los listeners viven en
+       los contenedores (no en las tarjetas), así que sobreviven al re-render. */
+    function refreshDynamicContent() {
+        renderLinks();
+        renderAreas();
+        renderProjects();
+        renderTimeline();
+        renderTools();
+        renderCertificates();
+        updateOtherTranslations();
+
+        // Los nodos recién creados conservan [data-reveal], pero sus triggers
+        // de GSAP ya no existen. Se fuerza la visibilidad (el CSS de
+        // html.js [data-reveal] deja opacity:0) para no ocultar contenido.
+        qsa('[data-reveal]').forEach(function (el) {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.visibility = '';
+        });
+        if (window.ScrollTrigger && typeof window.ScrollTrigger.refresh === 'function') {
+            window.ScrollTrigger.refresh();
+        }
+
+        var toolsBox = qs('[data-render="tools"]');
+        if (toolsBox) toolsBox.dispatchEvent(new CustomEvent('tools:relayout'));
     }
 
     /* ============================ NAVEGACIÓN ============================= */

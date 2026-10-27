@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="is-loading no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,6 +75,7 @@
     <link rel="stylesheet" href="css/effects.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/motion.css">
+    <link rel="stylesheet" href="css/loader.css">
 
     <!-- Tema antes del primer pintado: evita el destello del tema equivocado.
          En archivo externo (y no en línea) para que la CSP pueda exigir
@@ -120,6 +121,30 @@
 </head>
 
 <body>
+    <!-- ========================= PANTALLA DE CARGA ======================= -->
+    <!-- Se muestra al entrar y al abrir un proyecto. La controla js/loader.js.
+         La forma del monograma «D» se lee como un ave: flota, el punto late
+         y un arco azul gira alrededor. -->
+    <div class="page-loader is-active" id="page-loader" role="status" aria-live="polite">
+        <div class="page-loader-stage">
+            <div class="page-loader-mark" aria-hidden="true">
+                <svg viewBox="0 0 64 64" focusable="false">
+                    <rect class="pl-tile" width="64" height="64" rx="6"/>
+                    <path class="pl-glyph" d="M16 16h13c9.4 0 16 6.9 16 16s-6.6 16-16 16H16V16zm8 7v18h5c5.1 0 8.5-3.7 8.5-9S34.1 23 29 23h-5z"/>
+                    <circle class="pl-bead" cx="50" cy="47" r="4"/>
+                </svg>
+                <span class="page-loader-ring"></span>
+            </div>
+
+            <p class="page-loader-label">
+                <span class="page-loader-label-text">Cargando</span><span class="page-loader-dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>
+            </p>
+            <p class="page-loader-dest" id="page-loader-dest" hidden></p>
+
+            <div class="page-loader-bar" aria-hidden="true"><span></span></div>
+        </div>
+    </div>
+
     <!-- Filtro de «chispa» eléctrica para el borde de las tarjetas de proyecto -->
     <svg class="svg-defs" aria-hidden="true" focusable="false">
         <defs>
@@ -536,7 +561,8 @@
     <!-- ====================== LIGHTBOX DE CERTIFICADOS ==================== -->
     <dialog class="lightbox" id="cert-dialog" aria-labelledby="cert-dialog-title">
         <div class="lightbox-inner">
-            <button class="lightbox-close" type="button" data-dialog-close aria-label="Cerrar">
+            <button class="lightbox-close" type="button" data-dialog-close aria-label="Cerrar"
+                    data-i18n="dialog.close" data-i18n-attr="aria-label">
                 <i class="ri-close-line" aria-hidden="true"></i>
             </button>
 
@@ -562,7 +588,8 @@
     <dialog class="lightbox project-dialog" id="project-dialog"
             aria-labelledby="project-dialog-title">
         <div class="lightbox-inner">
-            <button class="lightbox-close" type="button" data-dialog-close aria-label="Cerrar detalle">
+            <button class="lightbox-close" type="button" data-dialog-close aria-label="Cerrar detalle"
+                    data-i18n="dialog.close.detail" data-i18n-attr="aria-label">
                 <i class="ri-close-line" aria-hidden="true"></i>
             </button>
 
@@ -578,25 +605,23 @@
                 <ul class="dialog-tech" id="project-dialog-tech"></ul>
                 <div class="dialog-actions">
                     <a class="btn btn-primary" id="project-dialog-demo" href="#" target="_blank"
-                       rel="noopener noreferrer" hidden>
-                        Ver demo <i class="ri-external-link-line" aria-hidden="true"></i>
-                        <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                       rel="noopener noreferrer" data-loader hidden>
+                        <span data-i18n="dialog.demo">Ver demo</span> <i class="ri-external-link-line" aria-hidden="true"></i>
                     </a>
                     <a class="btn btn-ghost" id="project-dialog-repo" href="#" target="_blank"
-                       rel="noopener noreferrer" hidden>
-                        Código <i class="ri-github-line" aria-hidden="true"></i>
-                        <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                       rel="noopener noreferrer" data-loader hidden>
+                        <span data-i18n="dialog.repo">Código</span> <i class="ri-github-line" aria-hidden="true"></i>
                     </a>
                     <a class="btn btn-ghost" id="project-dialog-preview" href="#" target="_blank"
-                       rel="noopener noreferrer" hidden>
-                        Vista previa del despliegue
-                        <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                       rel="noopener noreferrer" data-loader hidden>
+                        <span data-i18n="dialog.preview">Vista previa del despliegue</span>
                     </a>
                 </div>
             </div>
         </div>
     </dialog>
 
+    <script src="js/loader.js"></script>
     <script src="js/vendor/gsap.min.js"></script>
     <script src="js/vendor/ScrollTrigger.min.js"></script>
     <script src="js/logos.js"></script>

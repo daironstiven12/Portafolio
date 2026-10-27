@@ -9,6 +9,10 @@
    ========================================================================== */
 (function () {
     try {
+        // Sin JS esta clase se queda y css/loader.css oculta la pantalla de
+        // carga (la CSP no permite el <style> en línea de <noscript>).
+        document.documentElement.classList.remove('no-js');
+
         var saved = localStorage.getItem('theme');
         var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         if (saved === 'light' || (saved === null && prefersLight)) {

@@ -8,6 +8,8 @@
      tarjetas con GSAP.
    · Sin estilos en línea: la visibilidad se gestiona con la clase
      .is-filtered (css/components.css) y las propiedades animadas con GSAP.
+   · Se reconstruye al cambiar de idioma (evento 'languagechange') para
+     actualizar «Todos / All» y volver a enlazar los botones.
    ========================================================================== */
 (function () {
     'use strict';
@@ -32,6 +34,14 @@
             .replace(/"/g, '&quot;');
     }
 
+    function t(key, fallback) {
+        if (window.I18N && typeof window.I18N.t === 'function') {
+            var text = window.I18N.t(key);
+            if (text && text !== key) return text;
+        }
+        return fallback;
+    }
+
     /* --- Categorías reales, en orden de aparición --- */
     var cats = [];
     projects.forEach(function (p) {
@@ -45,22 +55,10 @@
         return;
     }
 
-    var labels = ['Todos'].concat(cats);
-
-    host.innerHTML =
-        '<span class="filters-pill" aria-hidden="true"></span>' +
-        labels.map(function (label, i) {
-            return '<button class="filter-btn' + (i === 0 ? ' is-active' : '') + '"' +
-                ' type="button" data-value="' + (i === 0 ? '' : esc(label)) + '"' +
-                ' aria-pressed="' + (i === 0 ? 'true' : 'false') + '">' +
-                esc(label) + '</button>';
-        }).join('') +
-        '<p class="sr-only" role="status" data-filter-status></p>';
-
-    var pill = host.querySelector('.filters-pill');
-    var buttons = Array.prototype.slice.call(host.querySelectorAll('.filter-btn'));
-    var status = host.querySelector('[data-filter-status]');
-    var active = buttons[0];
+    var pill = null;
+    var buttons = [];
+    var status = null;
+    var active = null;
 
     /* --- Píldora deslizante --- */
     function place() {
@@ -122,29 +120,63 @@
         }
 
         if (status) {
-            status.textContent = show.length + (show.length === 1
-                ? ' proyecto mostrado.'
-                : ' proyectos mostrados.');
+            var total = String(show.length);
+            status.textContent = total + (show.length === 1
+                ? t('projects.filter.one', ' proyecto mostrado.')
+                : t('projects.filter.many', ' proyectos mostrados.'));
         }
     }
 
-    /* --- Interacción --- */
-    buttons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            if (btn === active) return;
-            active = btn;
-            buttons.forEach(function (b) {
-                var on = b === btn;
-                b.classList.toggle('is-active', on);
-                b.setAttribute('aria-pressed', String(on));
+    /* --- Construcción / reconstrucción de los botones --- */
+    function build() {
+        var labels = [t('projects.filter.all', 'Todos')].concat(cats);
+
+        host.innerHTML =
+            '<span class="filters-pill" aria-hidden="true"></span>' +
+            labels.map(function (label, i) {
+                return '<button class="filter-btn' + (i === 0 ? ' is-active' : '') + '"' +
+                    ' type="button" data-value="' + (i === 0 ? '' : esc(label)) + '"' +
+                    ' aria-pressed="' + (i === 0 ? 'true' : 'false') + '">' +
+                    esc(label) + '</button>';
+            }).join('') +
+            '<p class="sr-only" role="status" data-filter-status></p>';
+
+        pill = host.querySelector('.filters-pill');
+        buttons = Array.prototype.slice.call(host.querySelectorAll('.filter-btn'));
+        status = host.querySelector('[data-filter-status]');
+        active = buttons[0];
+
+        buttons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                if (btn === active) return;
+                active = btn;
+                buttons.forEach(function (b) {
+                    var on = b === btn;
+                    b.classList.toggle('is-active', on);
+                    b.setAttribute('aria-pressed', String(on));
+                });
+                place();
+                apply(val(btn.getAttribute('data-value')));
             });
-            place();
-            apply(val(btn.getAttribute('data-value')));
         });
+
+        /* Al reconstruir, se vuelve a «Todos» sin animar: las tarjetas
+           recién pintadas ya vienen visibles desde main.js. */
+        Array.prototype.slice.call(grid.querySelectorAll('.project-card')).forEach(function (c) {
+            c.classList.remove('is-filtered');
+        });
+        place();
+    }
+
+    build();
+
+    /* El idioma cambió: main.js ya repintó las tarjetas; reconstruir los
+       botones mantiene los textos y los listeners coherentes. */
+    document.addEventListener('languagechange', function () {
+        build();
     });
 
     window.addEventListener('resize', place);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
     window.addEventListener('load', place);
-    place();
 })();
