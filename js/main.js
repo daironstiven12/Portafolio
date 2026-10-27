@@ -44,12 +44,25 @@
 
     function pad2(n) { return n < 10 ? '0' + n : String(n); }
 
-    var TYPE_LABELS = {
-        formacion: 'Formación',
-        proyecto: 'Proyecto',
-        hackathon: 'Hackathon',
-        investigacion: 'Investigación'
-    };
+    /* Helper de traducción (fallback a la clave si no existe). */
+    function t(key) {
+        if (window.I18N && typeof window.I18N.t === 'function') {
+            return window.I18N.t(key);
+        }
+        return key;
+    }
+
+    function getLang() {
+        if (window.I18N && typeof window.I18N.getLang === 'function') {
+            return window.I18N.getLang();
+        }
+        return 'es';
+    }
+
+    var TYPE_LABELS = {};
+    function typeLabel(type) {
+        return t('timeline.type.' + type) || type;
+    }
 
     var SITE = window.SITE || {};
 
@@ -83,6 +96,21 @@
         setupForm();
         setupPrint();
         setupLightbox();
+        setupLangToggle();
+        translateStaticUI();
+    }
+
+    /* --- Traducir elementos estáticos del HTML que tienen data-i18n --- */
+    function translateStaticUI() {
+        qsa('[data-i18n]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            var attr = el.getAttribute('data-i18n-attr');
+            if (attr) {
+                el.setAttribute(attr, t(key));
+            } else {
+                el.textContent = t(key);
+            }
+        });
     }
 
     /* --- Enlaces (hero · contacto · pie) --- */
@@ -95,8 +123,9 @@
             box.innerHTML = links.map(function (l) {
                 var url = val(l.url);
                 var label = val(l.label) || 'Enlace';
+                var newTab = t('dialog.newtab');
                 var attrs = l.external
-                    ? ' target="_blank" rel="noopener noreferrer" title="' + esc(label) + ' (se abre en una pestaña nueva)"'
+                    ? ' target="_blank" rel="noopener noreferrer" title="' + esc(label) + ' ' + esc(newTab) + '"'
                     : '';
 
                 if (variant === 'contact') {
@@ -122,17 +151,47 @@
         var box = qs('[data-render="areas"]');
         if (!box) return;
 
+        // Mapeo de id de área -> clave base de traducción
+        var areaKeyMap = {
+            'web': 'area.web',
+            'ux': 'area.ux',
+            'net': 'area.net',
+            'learning': 'area.learning'
+        };
+
         box.innerHTML = arr(SITE.areas).map(function (a) {
             if (!a) return '';
-            var chips = arr(a.items).filter(has).map(function (t) {
-                return '<span class="chip">' + esc(t) + '</span>';
+            var baseKey = areaKeyMap[a.id] || ('area.' + a.id);
+
+            // Traducir título y descripción si existen claves
+            var title = t(baseKey + '.title');
+            if (title === baseKey + '.title') title = val(a.title); // fallback al data.js
+
+            var desc = t(baseKey + '.desc');
+            if (desc === baseKey + '.desc') desc = val(a.description);
+
+            var items = arr(a.items);
+            // Traducir items si hay una clave de array
+            var itemsKey = baseKey + '.items';
+            if (window.I18N && window.I18N.TRANSLATIONS && window.I18N.TRANSLATIONS[itemsKey]) {
+                var translatedItems = t(itemsKey);
+                if (Array.isArray(translatedItems)) items = translatedItems;
+            }
+
+            var chips = items.filter(has).map(function (item) {
+                return '<span class="chip">' + esc(item) + '</span>';
             }).join('');
 
+            // Note
+            var note = val(a.note);
+            var noteKey = baseKey + '.note';
+            if (t(noteKey) !== noteKey) note = t(noteKey);
+
             return '<article class="area" data-reveal>' +
-                '<h3 class="area-title">' + esc(a.title) + '</h3>' +
-                '<p class="area-desc">' + esc(a.description) + '</p>' +
+                '<h3 class="area-title">' + esc(title) + '</h3>' +
+                '<p class="area-desc">' + esc(desc) + '</p>' +
                 (chips ? '<div class="area-items">' + chips + '</div>' : '') +
-                (!chips && has(a.note) ? '<p class="area-note">' + esc(a.note) + '</p>' : '') +
+                (!chips && has(note) ? '<p class="area-note">' + esc(note) + '</p>' : '') +
                 '</article>';
         }).join('');
     }
@@ -182,17 +241,17 @@
 
             /* --- Acciones: detalle siempre; despliegues solo si existen --- */
             var actions = '<button class="btn btn-ghost" type="button" data-project-detail>' +
-                '<i class="ri-file-text-line" aria-hidden="true"></i> Detalle</button>';
+                '<i class="ri-file-text-line" aria-hidden="true"></i> ' + esc(t('project.btn.detail')) + '</button>';
             if (demo) {
                 actions += '<a class="btn btn-primary" href="' + esc(demo) + '"' +
-                    ' target="_blank" rel="noopener noreferrer">Ver proyecto' +
+                    ' target="_blank" rel="noopener noreferrer">' + esc(t('project.btn.demo')) +
                     '<i class="ri-arrow-right-line" aria-hidden="true"></i>' +
-                    '<span class="sr-only"> (se abre en una pestaña nueva)</span></a>';
+                    '<span class="sr-only"> ' + esc(t('dialog.newtab')) + '</span></a>';
             }
             if (previewUrl) {
                 actions += '<a class="btn btn-ghost" href="' + esc(previewUrl) + '"' +
-                    ' target="_blank" rel="noopener noreferrer">Vista previa del despliegue' +
-                    '<span class="sr-only"> (se abre en una pestaña nueva)</span></a>';
+                    ' target="_blank" rel="noopener noreferrer">' + esc(t('project.btn.preview')) +
+                    '<span class="sr-only"> ' + esc(t('dialog.newtab')) + '</span></a>';
             }
 
             return '<article class="project-card"' +
@@ -210,13 +269,13 @@
                 '<h3 class="project-title">' +
                 (demo
                     ? '<a href="' + esc(demo) + '" target="_blank" rel="noopener noreferrer">' +
-                      esc(p.title) + '<span class="sr-only"> (se abre en una pestaña nueva)</span></a>'
+                      esc(p.title) + '<span class="sr-only"> ' + esc(t('dialog.newtab')) + '</span></a>'
                     : esc(p.title)) +
                 '</h3>' +
                 (has(p.description) ? '<p class="project-desc">' + esc(p.description) + '</p>' : '') +
                 (tech.length
-                    ? '<ul class="project-tech">' + tech.map(function (t) {
-                        return '<li class="chip">' + esc(t) + '</li>';
+                    ? '<ul class="project-tech">' + tech.map(function (x) {
+                        return '<li class="chip">' + esc(x) + '</li>';
                     }).join('') + '</ul>'
                     : '') +
                 (actions ? '<div class="project-actions">' + actions + '</div>' : '') +
@@ -255,28 +314,28 @@
         var box = qs('[data-render="timeline"]');
         if (!box) return;
 
-        box.innerHTML = arr(SITE.timeline).map(function (t) {
-            if (!t) return '';
-            var type = val(t.type) || 'proyecto';
-            var label = TYPE_LABELS[type] || type;
-            var title = has(t.href)
-                ? '<a class="tl-title" href="' + esc(t.href) + '">' + esc(t.title) +
+        box.innerHTML = arr(SITE.timeline).map(function (tl) {
+            if (!tl) return '';
+            var type = val(tl.type) || 'proyecto';
+            var label = typeLabel(type);
+            var title = has(tl.href)
+                ? '<a class="tl-title" href="' + esc(tl.href) + '">' + esc(tl.title) +
                   '<i class="ri-arrow-right-line" aria-hidden="true"></i></a>'
-                : '<h3 class="tl-title">' + esc(t.title) + '</h3>';
+                : '<h3 class="tl-title">' + esc(tl.title) + '</h3>';
 
-            var tags = arr(t.tags).filter(has).map(function (x) {
+            var tags = arr(tl.tags).filter(has).map(function (x) {
                 return '<span class="chip">' + esc(x) + '</span>';
             }).join('');
 
             return '<div class="tl-item" data-reveal>' +
                 '<div class="tl-rail">' +
-                (has(t.period) ? '<span class="tl-period">' + esc(t.period) + '</span>' : '') +
+                (has(tl.period) ? '<span class="tl-period">' + esc(tl.period) + '</span>' : '') +
                 '<span class="tl-badge tl-badge--' + esc(type) + '">' + esc(label) + '</span>' +
                 '</div>' +
                 '<div class="tl-body">' +
                 title +
-                (has(t.org) ? '<p class="tl-org">' + esc(t.org) + '</p>' : '') +
-                (has(t.description) ? '<p class="tl-desc">' + esc(t.description) + '</p>' : '') +
+                (has(tl.org) ? '<p class="tl-org">' + esc(tl.org) + '</p>' : '') +
+                (has(tl.description) ? '<p class="tl-desc">' + esc(tl.description) + '</p>' : '') +
                 (tags ? '<div class="tl-tags">' + tags + '</div>' : '') +
                 '</div>' +
                 '</div>';
@@ -291,6 +350,15 @@
         var uid = 0;
         var LOGOS = window.SITE_LOGOS || {};
 
+        // Mapa de group title -> clave de traducción
+        var groupKeyMap = {
+            'IA y apoyo': 'tools.group.ai',
+            'Desarrollo': 'tools.group.dev',
+            'Frontend': 'tools.group.frontend',
+            'Backend y datos': 'tools.group.backend',
+            'Despliegue': 'tools.group.deploy'
+        };
+
         box.innerHTML = arr(SITE.tools).map(function (g) {
             if (!g) return '';
             var items = arr(g.items).filter(function (it) {
@@ -298,9 +366,20 @@
             });
             if (!items.length) return '';
 
+            var groupKey = groupKeyMap[g.group];
+            var groupTitle = groupKey ? t(groupKey) : val(g.group);
+            if (groupTitle === groupKey) groupTitle = val(g.group);
+
             var label = (has(g.icon)
                 ? '<i class="' + esc(g.icon) + '" aria-hidden="true"></i>'
-                : '') + esc(g.group);
+                : '') + esc(groupTitle);
+
+            // Note
+            var note = val(g.note);
+            if (groupKey) {
+                var noteKey = groupKey + '.note';
+                if (t(noteKey) !== noteKey) note = t(noteKey);
+            }
 
             return '<section class="tool-cat" data-reveal>' +
                 '<h3 class="tool-cat-head">' + label + '</h3>' +
@@ -318,17 +397,32 @@
                         ? '<span class="tool-logo lg-' + esc(it.key) + '" aria-hidden="true">' +
                             svg + '</span>'
                         : '';
+
+                    // Traducir nombre y desc
+                    var nameKey = 'tool.' + it.key;
+                    var descKey = 'tool.' + it.key + '.desc';
+                    var name = t(nameKey);
+                    if (name === nameKey) name = val(it.name);
+                    var desc = t(descKey);
+                    if (desc === descKey) desc = val(it.desc);
+
+                    // Actualizar tip con desc traducido
+                    if (has(desc)) {
+                        tip = '<span class="tool-tip" role="tooltip" id="' + tipId + '">' +
+                            esc(desc) + '</span>';
+                    }
+
                     return '<li class="tool-card' + (it.feature ? ' tool-card--feature' : '') + '">' +
                         '<button class="tool-btn" type="button" aria-expanded="false">' +
                             logo +
-                            '<span class="tool-name">' + esc(it.name) + '</span>' +
+                            '<span class="tool-name">' + esc(name) + '</span>' +
                             (it.feature
-                                ? '<span class="tool-badge" aria-hidden="true">Principal</span>'
+                                ? '<span class="tool-badge" aria-hidden="true">' + esc(t('tools.badge.main')) + '</span>'
                                 : '') +
                         '</button>' + tip +
                         '</li>';
                 }).join('') + '</ul>' +
-                (has(g.note) ? '<p class="tool-note">' + esc(g.note) + '</p>' : '') +
+                (has(note) ? '<p class="tool-note">' + esc(note) + '</p>' : '') +
                 '</section>';
         }).join('');
     }
@@ -427,7 +521,7 @@
             if (has(c.date)) meta += (meta ? ' · ' : '') + '<span class="cert-date">' + esc(c.date) + '</span>';
 
             return '<button class="cert-card" type="button" data-reveal data-cert="' + i + '"' +
-                ' aria-label="Ampliar: ' + esc(c.title) + '">' +
+                ' aria-label="' + esc(t('cert.zoom')) + ': ' + esc(c.title) + '">' +
                 (has(c.image)
                     ? '<div class="cert-thumb"><img src="' + esc(c.image) + '" alt="' +
                       esc(c.title) + '"' +
@@ -480,6 +574,45 @@
     function stampYear() {
         var year = String(new Date().getFullYear());
         qsa('[data-year]').forEach(function (el) { el.textContent = year; });
+    }
+
+    function updateOtherTranslations() {
+        // Update project counts
+        var count = qs('[data-count="projects"]');
+        if (count && SITE.projects) {
+            count.textContent = pad2(SITE.projects.length);
+        }
+        
+        // Update hero spec translations
+        updateHeroSpecTranslations();
+    }
+    
+    function updateHeroSpecTranslations() {
+        var specHead = qs('.spec-head');
+        if (specHead) {
+            var focusSpan = specHead.querySelector('span:first-child');
+            if (focusSpan) focusSpan.textContent = t('hero.spec.card');
+            var profileSpan = specHead.querySelector('span:last-child');
+            if (profileSpan) profileSpan.textContent = t('nav.perfil');
+        }
+        
+        // Update spec rows
+        var specRows = qsa('.spec-row');
+        if (specRows.length >= 3) {
+            specRows[0].querySelector('dt').textContent = t('hero.spec.focus');
+            specRows[0].querySelector('dd').textContent = t('hero.spec.focus.value');
+            specRows[1].querySelector('dt').textContent = t('hero.spec.location');
+            specRows[1].querySelector('dd').textContent = t('hero.spec.location.value');
+            specRows[2].querySelector('dt').textContent = t('hero.spec.status');
+            specRows[2].querySelector('dd').textContent = t('hero.spec.status.value');
+        }
+        
+        // Update hero spec CTA
+        var specCta = qs('.spec-foot');
+        if (specCta) {
+            var ctaText = specCta.querySelector('span');
+            if (ctaText) ctaText.textContent = t('hero.spec.cta');
+        }
     }
 
     /* ============================= REVEAL ================================ */
@@ -545,7 +678,7 @@
 
         function setOpen(open) {
             toggle.setAttribute('aria-expanded', String(open));
-            toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+            toggle.setAttribute('aria-label', open ? t('nav.close') : t('nav.open'));
             nav.classList.toggle('is-open', open);
             document.body.classList.toggle('nav-open', open);
             if (backdrop) backdrop.hidden = !open;
@@ -730,14 +863,14 @@
 
             var ok = true;
             ok = setError(name, qs('#name-error', form),
-                val(name.value) ? '' : 'Indica tu nombre.') && ok;
+                val(name.value) ? '' : t('form.error.name')) && ok;
 
             var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val(email.value));
             ok = setError(email, qs('#email-error', form),
-                emailOk ? '' : 'Introduce un correo válido.') && ok;
+                emailOk ? '' : t('form.error.email')) && ok;
 
             ok = setError(message, qs('#message-error', form),
-                val(message.value) ? '' : 'Escribe un mensaje.') && ok;
+                val(message.value) ? '' : t('form.error.message')) && ok;
 
             if (!ok) {
                 var firstInvalid = qs('[aria-invalid="true"]', form);
@@ -748,7 +881,7 @@
             if (!destination) {
                 if (status) {
                     status.hidden = false;
-                    status.textContent = 'No hay un correo configurado todavía en js/data.js.';
+                    status.textContent = t('form.status.noemail');
                 }
                 return;
             }
@@ -764,8 +897,7 @@
 
             if (status) {
                 status.hidden = false;
-                status.textContent = 'Tu aplicación de correo debería haberse abierto con el mensaje listo. ' +
-                    'Si no fue así, escribe directamente a ' + destination + '.';
+                status.textContent = t('form.status.sent').replace('{email}', destination);
             }
 
             form.reset();
@@ -831,6 +963,7 @@
                 if (has(c.verifyUrl)) {
                     verify.href = c.verifyUrl;
                     verify.hidden = false;
+                    verify.textContent = t('cert.verify');
                 } else {
                     verify.removeAttribute('href');
                     verify.hidden = true;
@@ -849,5 +982,48 @@
             if (e.target === dialog) dialog.close();
         });
     }
+
+    /* ============================ IDIOMA ================================= */
+
+    function setupLangToggle() {
+        var btn = qs('#lang-toggle');
+        if (!btn) return;
+
+        var lang = getLang();
+        var textSpan = qs('.lang-text', btn);
+        if (textSpan) textSpan.textContent = lang.toUpperCase();
+
+        // aria-label = idioma al que cambia
+        var opposite = lang === 'es' ? 'en' : 'es';
+        btn.setAttribute('aria-label', lang === 'es' ? t('lang.toggle') : t('lang.toggle'));
+        btn.setAttribute('title', lang === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish');
+
+        btn.addEventListener('click', function () {
+            if (window.I18N && typeof window.I18N.toggleLang === 'function') {
+                window.I18N.toggleLang();
+            }
+        });
+    }
+
+    /* ============================ NAVEGACIÓN ============================= */
+
+    // Traducir los enlaces de navegación en el HTML
+    (function translateNavLinks() {
+        var navMap = {
+            '#perfil': 'nav.perfil',
+            '#capacidades': 'nav.capacidades',
+            '#proyectos': 'nav.proyectos',
+            '#trayectoria': 'nav.trayectoria',
+            '#certificados': 'nav.certificados',
+            '#herramientas': 'nav.herramientas',
+            '#contacto': 'nav.contacto'
+        };
+        qsa('.nav-link, .footer-nav-link').forEach(function (link) {
+            var href = val(link.getAttribute('href'));
+            if (navMap[href]) {
+                link.textContent = t(navMap[href]);
+            }
+        });
+    })();
 
 })();

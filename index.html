@@ -81,6 +81,10 @@
          script-src 'self' sin 'unsafe-inline'. -->
     <script src="js/theme-init.js"></script>
 
+    <!-- i18n: debe cargarse ANTES de data.js y main.js para que los meta tags
+         y el render inicial usen el idioma correcto. -->
+    <script src="js/i18n.js"></script>
+
     <!-- Datos estructurados: solo información verificada en este repositorio -->
     <script type="application/ld+json">
     {
@@ -139,7 +143,7 @@
         </defs>
     </svg>
 
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <a class="skip-link" href="#contenido" data-i18n="skip.link">Saltar al contenido</a>
 
     <!-- ============================ CABECERA ============================ -->
     <header class="site-header" id="site-header">
@@ -150,13 +154,13 @@
 
             <nav class="nav" id="nav" aria-label="Navegación principal">
                 <ul class="nav-list">
-                    <li><a class="nav-link" href="#perfil">Perfil</a></li>
-                    <li><a class="nav-link" href="#capacidades">Capacidades</a></li>
-                    <li><a class="nav-link" href="#proyectos">Proyectos</a></li>
-                    <li><a class="nav-link" href="#trayectoria">Trayectoria</a></li>
-                    <li><a class="nav-link" href="#certificados">Certificados</a></li>
-                    <li><a class="nav-link" href="#herramientas">Herramientas</a></li>
-                    <li><a class="nav-link" href="#contacto">Contacto</a></li>
+                    <li><a class="nav-link" href="#perfil" data-i18n="nav.perfil">Perfil</a></li>
+                    <li><a class="nav-link" href="#capacidades" data-i18n="nav.capacidades">Capacidades</a></li>
+                    <li><a class="nav-link" href="#proyectos" data-i18n="nav.proyectos">Proyectos</a></li>
+                    <li><a class="nav-link" href="#trayectoria" data-i18n="nav.trayectoria">Trayectoria</a></li>
+                    <li><a class="nav-link" href="#certificados" data-i18n="nav.certificados">Certificados</a></li>
+                    <li><a class="nav-link" href="#herramientas" data-i18n="nav.herramientas">Herramientas</a></li>
+                    <li><a class="nav-link" href="#contacto" data-i18n="nav.contacto">Contacto</a></li>
                 </ul>
             </nav>
 
@@ -166,6 +170,11 @@
                         title="Alternar tema claro u oscuro">
                     <i class="ri-sun-line theme-icon theme-icon--light" aria-hidden="true"></i>
                     <i class="ri-moon-line theme-icon theme-icon--dark" aria-hidden="true"></i>
+                </button>
+
+                <button class="lang-toggle" id="lang-toggle" type="button"
+                        aria-label="Cambiar a inglés" title="Cambiar idioma">
+                    <span class="lang-text" aria-hidden="true">ES</span>
                 </button>
 
                 <button class="nav-toggle" id="nav-toggle" type="button"
@@ -192,9 +201,9 @@
 
                     <h1 class="hero-title" data-reveal>Dairon Orejuela<span class="hero-dot">.</span></h1>
 
-                    <p class="hero-role" data-reveal>Estudiante de Ingeniería de Telecomunicaciones e Informática</p>
+                    <p class="hero-role" data-reveal data-i18n="hero.role">Estudiante de Ingeniería de Telecomunicaciones e Informática</p>
 
-                    <p class="hero-summary" data-reveal>
+                    <p class="hero-summary" data-reveal data-i18n="hero.summary">
                         Orientado al desarrollo de software: aplicaciones web, interfaces y
                         experiencias digitales. Construyo proyectos reales y documento
                         lo que aprendo en el camino.
@@ -202,11 +211,11 @@
 
                     <div class="hero-actions">
                         <a class="btn btn-primary" href="#proyectos" data-reveal>
-                            Ver proyectos <i class="ri-arrow-right-line" aria-hidden="true"></i>
+                            <span data-i18n="hero.btn.projects">Ver proyectos</span> <i class="ri-arrow-right-line" aria-hidden="true"></i>
                         </a>
-                        <a class="btn btn-ghost" href="#contacto" data-reveal>Contacto</a>
+                        <a class="btn btn-ghost" href="#contacto" data-reveal data-i18n="hero.btn.contact">Contacto</a>
                         <a class="btn btn-quiet" href="assets/CV_Dairon_Orejuela.pdf" download="CV_Dairon_Orejuela.pdf" data-reveal>
-                            <i class="ri-download-2-line" aria-hidden="true"></i> Descargar CV
+                            <i class="ri-download-2-line" aria-hidden="true"></i> <span data-i18n="hero.btn.cv">Descargar CV</span>
                         </a>
                     </div>
 
@@ -222,23 +231,23 @@
                     <div class="hero-photo" data-photo hidden></div>
 
                     <div class="spec" data-spec>
-                        <p class="spec-head"><span>Ficha técnica</span><span>Perfil</span></p>
+                        <p class="spec-head"><span data-i18n="hero.spec.card">Ficha técnica</span><span data-i18n="nav.perfil">Perfil</span></p>
                         <dl class="spec-list">
                             <div class="spec-row">
-                                <dt>Focus</dt>
-                                <dd>Web · UX/UI · Software</dd>
+                                <dt data-i18n="hero.spec.focus">Focus</dt>
+                                <dd data-i18n="hero.spec.focus.value">Web · UX/UI · Software</dd>
                             </div>
                             <div class="spec-row">
-                                <dt>Ubicación</dt>
-                                <dd>Colombia</dd>
+                                <dt data-i18n="hero.spec.location">Ubicación</dt>
+                                <dd data-i18n="hero.spec.location.value">Colombia</dd>
                             </div>
                             <div class="spec-row">
-                                <dt>Estado</dt>
-                                <dd>Estudiante · Desarrollador en formación</dd>
+                                <dt data-i18n="hero.spec.status">Estado</dt>
+                                <dd data-i18n="hero.spec.status.value">Estudiante · Desarrollador en formación</dd>
                             </div>
                         </dl>
                         <a class="spec-foot" href="#trayectoria">
-                            Ver trayectoria <i class="ri-arrow-right-line" aria-hidden="true"></i>
+                            <span data-i18n="hero.spec.cta">Ver trayectoria</span> <i class="ri-arrow-right-line" aria-hidden="true"></i>
                         </a>
                     </div>
                 </aside>
@@ -257,23 +266,23 @@
             <div class="container">
                 <div class="split">
                     <header class="section-head">
-                        <p class="section-index">Perfil</p>
-                        <h2 class="section-title">Quién está detrás del código</h2>
+                        <p class="section-index" data-i18n="section.perfil">Perfil</p>
+                        <h2 class="section-title" data-i18n="section.perfil.title">Quién está detrás del código</h2>
                     </header>
 
                     <div class="prose">
-                        <p class="prose-lead">
+                        <p class="prose-lead" data-i18n="perfil.lead">
                             Estudiante de Ingeniería de Telecomunicaciones e Informática,
                             orientado al desarrollo de software, aplicaciones web, backend,
                             bases de datos, inteligencia artificial y UX/UI.
                         </p>
-                        <p>
+                        <p data-i18n="perfil.p2">
                             Combino la formación universitaria con la creación de interfaces y
                             sitios web funcionales. Antes de la universidad obtuve el Tecnólogo
                             en Desarrollo de Software (SENA, 2022), la base sobre la que sigo
                             construyendo proyecto a proyecto.
                         </p>
-                        <p>
+                        <p data-i18n="perfil.p3">
                             Mi forma de trabajar es directa: entender el problema, diseñar la
                             solución, construirla y volver a revisarla. El siguiente tramo de mi
                             camino apunta a React, Node.js y bases de datos para completar el
@@ -281,9 +290,9 @@
                         </p>
 
                         <blockquote class="pullquote">
-                            <p>«El aprendizaje es un viaje continuo. Cada proyecto es una oportunidad
+                            <p data-i18n="perfil.quote">«El aprendizaje es un viaje continuo. Cada proyecto es una oportunidad
                             para mejorar y cada error, una lección.»</p>
-                            <cite>Dairon Orejuela</cite>
+                            <cite data-i18n="perfil.quote.author">Dairon Orejuela</cite>
                         </blockquote>
                     </div>
                 </div>
@@ -294,9 +303,9 @@
         <section class="section" id="capacidades" data-section data-optional="areas">
             <div class="container">
                 <header class="section-head">
-                    <p class="section-index">Capacidades</p>
-                    <h2 class="section-title">Áreas de especialización</h2>
-                    <p class="section-lede">
+                    <p class="section-index" data-i18n="section.capacidades">Capacidades</p>
+                    <h2 class="section-title" data-i18n="section.capacidades.title">Áreas de especialización</h2>
+                    <p class="section-lede" data-i18n="section.capacidades.lede">
                         Agrupadas por disciplina, no por logo. Cada área resume qué sé
                         hacer y con qué tecnología lo aplico.
                     </p>
@@ -311,9 +320,9 @@
             <div class="container">
                 <header class="section-head section-head--row">
                     <div class="section-head-main">
-                        <p class="section-index">Proyectos</p>
-                        <h2 class="section-title">Trabajo seleccionado</h2>
-                        <p class="section-lede">
+                        <p class="section-index" data-i18n="section.proyectos">Proyectos</p>
+                        <h2 class="section-title" data-i18n="section.proyectos.title">Trabajo seleccionado</h2>
+                        <p class="section-lede" data-i18n="section.proyectos.lede">
                             Proyectos reales: aplicaciones desplegadas, proyectos de
                             hackathon, comercio web y material de enseñanza. Cada tarjeta
                             abre su detalle; desde ahí accedes al proyecto publicado.
@@ -327,7 +336,7 @@
 
                 <div class="project-grid" data-render="projects"></div>
 
-                <p class="note">
+                <p class="note" data-i18n="projects.note">
                     Solo aparecen proyectos verificados con sus tecnologías reales.
                     Aquellos con versión desplegada abren el sitio publicado en una
                     pestaña nueva.
@@ -339,9 +348,9 @@
         <section class="section" id="trayectoria" data-section data-optional="timeline">
             <div class="container">
                 <header class="section-head">
-                    <p class="section-index">Trayectoria</p>
-                    <h2 class="section-title">Formación y experiencia</h2>
-                    <p class="section-lede">
+                    <p class="section-index" data-i18n="section.trayectoria">Trayectoria</p>
+                    <h2 class="section-title" data-i18n="section.trayectoria.title">Formación y experiencia</h2>
+                    <p class="section-lede" data-i18n="section.trayectoria.lede">
                         Academia y proyectos diferenciados por tipo. Sin experiencia
                         laboral inventada: solo lo que está documentado.
                     </p>
@@ -355,9 +364,9 @@
         <section class="section" id="certificados" data-section data-optional="certificates" hidden>
             <div class="container">
                 <header class="section-head">
-                    <p class="section-index">Certificados</p>
-                    <h2 class="section-title">Certificaciones</h2>
-                    <p class="section-lede">
+                    <p class="section-index" data-i18n="section.certificados">Certificados</p>
+                    <h2 class="section-title" data-i18n="section.certificados.title">Certificaciones</h2>
+                    <p class="section-lede" data-i18n="section.certificados.lede">
                         Certificados emitidos por instituciones y programas oficiales,
                         con su institución y fecha. Selecciona uno para verlo ampliado.
                     </p>
@@ -371,9 +380,9 @@
         <section class="section" id="herramientas" data-section data-optional="tools">
             <div class="container">
                 <header class="section-head">
-                    <p class="section-index">Herramientas</p>
-                    <h2 class="section-title">Herramientas y tecnologías</h2>
-                    <p class="section-lede">
+                    <p class="section-index" data-i18n="section.herramientas">Herramientas</p>
+                    <h2 class="section-title" data-i18n="section.herramientas.title">Herramientas y tecnologías</h2>
+                    <p class="section-lede" data-i18n="section.herramientas.lede">
                         Herramientas, tecnologías y plataformas con las que construyo
                         y publico proyectos, agrupadas por función. Pasa el cursor o
                         toca una tarjeta para ver en qué la utilizo.
@@ -385,8 +394,8 @@
                          aria-label="Herramientas y tecnologías"></div>
                     <div class="view-toggle" data-tool-view role="group" aria-label="Modo de vista">
                         <span class="view-pill" aria-hidden="true"></span>
-                        <button class="view-btn" type="button" data-view="grid" aria-pressed="true"><i class="ri-layout-grid-line" aria-hidden="true"></i>Cuadrícula</button>
-                        <button class="view-btn" type="button" data-view="wheel" aria-pressed="false"><i class="ri-loader-3-line" aria-hidden="true"></i>Ruleta</button>
+                        <button class="view-btn" type="button" data-view="grid" aria-pressed="true"><i class="ri-layout-grid-line" aria-hidden="true"></i><span data-i18n="tools.view.grid">Cuadrícula</span></button>
+                        <button class="view-btn" type="button" data-view="wheel" aria-pressed="false"><i class="ri-loader-3-line" aria-hidden="true"></i><span data-i18n="tools.view.wheel">Ruleta</span></button>
                     </div>
                 </div>
 
@@ -399,9 +408,9 @@
         <section class="section" id="contacto" data-section>
             <div class="container">
                 <header class="section-head">
-                    <p class="section-index">Contacto</p>
-                    <h2 class="section-title">Hablemos del siguiente proyecto</h2>
-                    <p class="section-lede">
+                    <p class="section-index" data-i18n="section.contacto">Contacto</p>
+                    <h2 class="section-title" data-i18n="section.contacto.title">Hablemos del siguiente proyecto</h2>
+                    <p class="section-lede" data-i18n="section.contacto.lede">
                         ¿Una colaboración, una duda o una oportunidad? Escríbeme y te
                         respondo lo antes posible.
                     </p>
@@ -409,7 +418,7 @@
 
                 <div class="contact-grid">
                     <div class="contact-info">
-                        <p class="contact-lead">
+                        <p class="contact-lead" data-i18n="contact.lead">
                             El canal más directo es el correo. También encuentras el resto
                             de perfiles cuando están publicados.
                         </p>
@@ -418,49 +427,49 @@
 
                         <dl class="contact-facts">
                             <div>
-                                <dt>Ubicación</dt>
-                                <dd>Colombia</dd>
+                                <dt data-i18n="contact.fact.location">Ubicación</dt>
+                                <dd data-i18n="contact.fact.location.value">Colombia</dd>
                             </div>
                             <div>
-                                <dt>Perfil</dt>
-                                <dd>Estudiante · Desarrollador en formación</dd>
+                                <dt data-i18n="contact.fact.profile">Perfil</dt>
+                                <dd data-i18n="contact.fact.profile.value">Estudiante · Desarrollador en formación</dd>
                             </div>
                         </dl>
                     </div>
 
                     <form class="contact-form" id="contact-form" novalidate>
                         <div class="form-row">
-                            <label class="form-label" for="name">Nombre</label>
+                            <label class="form-label" for="name" data-i18n="form.label.name">Nombre</label>
                             <input class="form-control" type="text" id="name" name="name"
                                    autocomplete="name" aria-describedby="name-error" required>
-                            <p class="form-error" id="name-error" hidden>Indica tu nombre.</p>
+                            <p class="form-error" id="name-error" hidden data-i18n="form.error.name">Indica tu nombre.</p>
                         </div>
 
                         <div class="form-row">
-                            <label class="form-label" for="email">Correo</label>
+                            <label class="form-label" for="email" data-i18n="form.label.email">Correo</label>
                             <input class="form-control" type="email" id="email" name="email"
                                    autocomplete="email" aria-describedby="email-error" required>
-                            <p class="form-error" id="email-error" hidden>Introduce un correo válido.</p>
+                            <p class="form-error" id="email-error" hidden data-i18n="form.error.email">Introduce un correo válido.</p>
                         </div>
 
                         <div class="form-row">
-                            <label class="form-label" for="subject">Asunto</label>
+                            <label class="form-label" for="subject" data-i18n="form.label.subject">Asunto</label>
                             <input class="form-control" type="text" id="subject" name="subject"
                                    autocomplete="off">
                         </div>
 
                         <div class="form-row">
-                            <label class="form-label" for="message">Mensaje</label>
+                            <label class="form-label" for="message" data-i18n="form.label.message">Mensaje</label>
                             <textarea class="form-control" id="message" name="message" rows="5"
                                       aria-describedby="message-error" required></textarea>
-                            <p class="form-error" id="message-error" hidden>Escribe un mensaje.</p>
+                            <p class="form-error" id="message-error" hidden data-i18n="form.error.message">Escribe un mensaje.</p>
                         </div>
 
                         <button class="btn btn-primary btn-block" type="submit">
-                            Preparar mensaje <i class="ri-arrow-right-line" aria-hidden="true"></i>
+                            <span data-i18n="form.btn.submit">Preparar mensaje</span> <i class="ri-arrow-right-line" aria-hidden="true"></i>
                         </button>
 
-                        <p class="form-hint">
+                        <p class="form-hint" data-i18n="form.hint">
                             Se abrirá tu aplicación de correo con el mensaje ya escrito.
                             Nada se envía hasta que tú lo confirmes.
                         </p>
@@ -481,7 +490,7 @@
                     <a class="brand" href="#inicio">
                         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false"><rect class="bm-tile" width="64" height="64" rx="6"/><path class="bm-glyph" d="M16 16h13c9.4 0 16 6.9 16 16s-6.6 16-16 16H16V16zm8 7v18h5c5.1 0 8.5-3.7 8.5-9S34.1 23 29 23h-5z"/><circle class="bm-bead" cx="50" cy="47" r="4"/></svg></span>
                     </a>
-                    <p class="footer-text">
+                    <p class="footer-text" data-i18n="footer.tagline">
                         Estudiante de Telecomunicaciones e Informática.
                         Desarrollo web, UX/UI y software en construcción constante.
                     </p>
@@ -489,32 +498,32 @@
                 </div>
 
                 <nav class="footer-col" aria-label="Secciones del sitio">
-                    <h2 class="footer-title">Secciones</h2>
+                    <h2 class="footer-title" data-i18n="footer.sections">Secciones</h2>
                     <ul class="footer-list">
-                        <li><a class="footer-nav-link" href="#perfil">Perfil</a></li>
-                        <li><a class="footer-nav-link" href="#capacidades">Capacidades</a></li>
-                        <li><a class="footer-nav-link" href="#proyectos">Proyectos</a></li>
-                        <li><a class="footer-nav-link" href="#trayectoria">Trayectoria</a></li>
-                        <li><a class="footer-nav-link" href="#certificados">Certificados</a></li>
-                        <li><a class="footer-nav-link" href="#herramientas">Herramientas</a></li>
-                        <li><a class="footer-nav-link" href="#contacto">Contacto</a></li>
+                        <li><a class="footer-nav-link" href="#perfil" data-i18n="nav.perfil">Perfil</a></li>
+                        <li><a class="footer-nav-link" href="#capacidades" data-i18n="nav.capacidades">Capacidades</a></li>
+                        <li><a class="footer-nav-link" href="#proyectos" data-i18n="nav.proyectos">Proyectos</a></li>
+                        <li><a class="footer-nav-link" href="#trayectoria" data-i18n="nav.trayectoria">Trayectoria</a></li>
+                        <li><a class="footer-nav-link" href="#certificados" data-i18n="nav.certificados">Certificados</a></li>
+                        <li><a class="footer-nav-link" href="#herramientas" data-i18n="nav.herramientas">Herramientas</a></li>
+                        <li><a class="footer-nav-link" href="#contacto" data-i18n="nav.contacto">Contacto</a></li>
                     </ul>
                 </nav>
 
                 <div class="footer-col">
-                    <h2 class="footer-title">Trabajo</h2>
+                    <h2 class="footer-title" data-i18n="footer.work">Trabajo</h2>
                     <ul class="footer-list">
-                        <li><a href="#proyectos">Proyectos publicados</a></li>
-                        <li><a href="#capacidades">Áreas de especialización</a></li>
-                        <li><a href="#trayectoria">Formación</a></li>
-                        <li><a href="assets/CV_Dairon_Orejuela.pdf" download="CV_Dairon_Orejuela.pdf">Descargar CV</a></li>
+                        <li><a href="#proyectos" data-i18n="footer.work.projects">Proyectos publicados</a></li>
+                        <li><a href="#capacidades" data-i18n="footer.work.skills">Áreas de especialización</a></li>
+                        <li><a href="#trayectoria" data-i18n="footer.work.journey">Formación</a></li>
+                        <li><a href="assets/CV_Dairon_Orejuela.pdf" download="CV_Dairon_Orejuela.pdf" data-i18n="footer.work.cv">Descargar CV</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>© <span data-year>2026</span> Dairon Orejuela. Todos los derechos reservados.</p>
-                <p class="footer-note">HTML · CSS · JavaScript — sin frameworks.</p>
+                <p>© <span data-year>2026</span> Dairon Orejuela. <span data-i18n="footer.copyright">Todos los derechos reservados.</span></p>
+                <p class="footer-note" data-i18n="footer.stack">HTML · CSS · JavaScript — sin frameworks.</p>
             </div>
         </div>
     </footer>

@@ -1,3 +1,5 @@
+
+
 /* ==========================================================================
    main.css — Estilos del portafolio
    --------------------------------------------------------------------------
@@ -2300,3 +2302,26 @@ html.js [data-reveal] {
 .hero-content { min-width: 0; }
 .spec-list { display: block; }
 .footer-col { min-width: 0; }
+
+.lang-toggle {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    transition: var(--transition);
+}
+
+.lang-toggle:hover {
+    color: var(--primary);
+    background: var(--glass-pill);
+}
+
+.lang-toggle:active {
+    transform: scale(0.88);
+}
